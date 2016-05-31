@@ -90,7 +90,6 @@ public class Conference {
 		float average;
 		ArrayList<Article> acceptedArticles = null;
 		
-		
 		for (Article candidateArticle : articlesSubmitted) {
 			sumGrades = 0;
 			Map<Researcher, Float> articleGrades = candidateArticle.getGrades();
@@ -108,8 +107,6 @@ public class Conference {
 			}
 		}
 
-		
-		
 		return acceptedArticles;
 	}
 
@@ -123,13 +120,16 @@ public class Conference {
 	}
 
 	public Researcher getCoordinator() {
-		// TODO: Implement
-		return null;
+		return coordinator;
 	}
 
 	public boolean hasUnreviewedArticles() {
-		// TODO: Implement
-		return false;
+		for (Article submittedArticle : articlesSubmitted) {
+			if (!articlesAllocated.contains(submittedArticle)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public String toStringSimple() {
