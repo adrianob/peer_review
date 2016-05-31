@@ -58,15 +58,15 @@ public class Conference {
 		int i;
 		
 		while (researchCandidates.size() > 0) {
-			for (i=0;i<researchCandidates.size();i++) {
-				int articlesAmount = researchCandidates.get(i).getAlocatedArticles().size();
+			for (Researcher researchCandidate : researchCandidates) {
+				int articlesAmount = researchCandidate.getAlocatedArticles().size();
 				
 				if (articlesAmount < researcherWithLeastArticles.getAlocatedArticles().size()) {
-					researcherWithLeastArticles = researchCandidates.get(i);
+					researcherWithLeastArticles = researchCandidate;
 					
 				} else if (articlesAmount == researcherWithLeastArticles.getAlocatedArticles().size()) {
-					if (researchCandidates.get(i).getID() < researcherWithLeastArticles.getID()) {
-						researcherWithLeastArticles = researchCandidates.get(i);
+					if (researchCandidate.getID() < researcherWithLeastArticles.getID()) {
+						researcherWithLeastArticles = researchCandidate;
 					}
 				}
 			}
@@ -86,14 +86,13 @@ public class Conference {
 	}
 
 	public ArrayList<Article> getAcceptedArticles() {
-		Article candidateArticle;
 		float sumGrades;
 		float average;
 		ArrayList<Article> acceptedArticles = null;
 		
-		for (int i=0;i<articlesSubmitted.size();i++) {
+		
+		for (Article candidateArticle : articlesSubmitted) {
 			sumGrades = 0;
-			candidateArticle = articlesSubmitted.get(i);
 			Map<Researcher, Float> articleGrades = candidateArticle.getGrades();
 			float grade;
 			
