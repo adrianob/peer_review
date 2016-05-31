@@ -1,6 +1,10 @@
 package peer_review.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Conference {
 	private String initials;
@@ -55,14 +59,18 @@ public class Conference {
 		
 		while (researchCandidates.size() > 0) {
 			for (i=0;i<researchCandidates.size();i++) {
-				if (researchCandidates.get(i).getAlocatedArticles().size() < researcherWithLeastArticles.getAlocatedArticles().size()) {
+				int articlesAmount = researchCandidates.get(i).getAlocatedArticles().size();
+				
+				if (articlesAmount < researcherWithLeastArticles.getAlocatedArticles().size()) {
 					researcherWithLeastArticles = researchCandidates.get(i);
-				} else if (researchCandidates.get(i).getAlocatedArticles().size() == researcherWithLeastArticles.getAlocatedArticles().size()) {
+					
+				} else if (articlesAmount == researcherWithLeastArticles.getAlocatedArticles().size()) {
 					if (researchCandidates.get(i).getID() < researcherWithLeastArticles.getID()) {
 						researcherWithLeastArticles = researchCandidates.get(i);
 					}
 				}
 			}
+			
 			sortedResearchers.add(researcherWithLeastArticles);
 			researchCandidates.remove(researcherWithLeastArticles);
 		}
@@ -72,12 +80,38 @@ public class Conference {
 
 	public Article allocateArticle(Article lowestIDSubmittedArticle, Researcher firstSortedResearcher) {
 		lowestIDSubmittedArticle.allocateReviewer(firstSortedResearcher);
+		firstSortedResearcher.allocateArticle(lowestIDSubmittedArticle);
+		articlesSubmitted.add(lowestIDSubmittedArticle);
 		return lowestIDSubmittedArticle;
 	}
 
 	public ArrayList<Article> getAcceptedArticles() {
-		// TODO: Implement
-		return null;
+		Article candidateArticle;
+		float sumGrades;
+		float average;
+		ArrayList<Article> acceptedArticles = null;
+		
+		for (int i=0;i<articlesSubmitted.size();i++) {
+			sumGrades = 0;
+			candidateArticle = articlesSubmitted.get(i);
+			Map<Researcher, Float> articleGrades = candidateArticle.getGrades();
+			float grade;
+			
+			for(Entry<Researcher, Float> entry: articleGrades.entrySet()) {
+				grade = entry.getValue();
+				sumGrades = sumGrades + grade;
+			}
+			
+			average = sumGrades/articleGrades.size();
+			
+			if (average >= 0) {
+				acceptedArticles.add(candidateArticle);
+			}
+		}
+
+		
+		
+		return acceptedArticles;
 	}
 
 	public String getInitials() {
