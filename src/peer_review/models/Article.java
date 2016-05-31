@@ -27,6 +27,10 @@ public class Article {
 	public ResearchTopic getResearchTopic() {
 		return researchTopic;
 	}
+	
+	public Map<Researcher, Float> getGrades() {
+		return grades;
+	}
 
 	public Boolean isResearcherAllocated(Researcher researcher) {
 		// TODO: Implement
