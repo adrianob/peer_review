@@ -48,12 +48,7 @@ public class Article {
 	}
 
 	public int numberOfReviewers() {
-		int amount = 0;
-		
-		for (Researcher reviewer : reviewers) {
-			amount++;
-		}
-		return amount;
+		return reviewers.size();
 	}
 	
 	public List<Researcher> getReviewers() {
