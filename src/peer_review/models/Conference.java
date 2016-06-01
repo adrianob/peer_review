@@ -1,8 +1,6 @@
 package peer_review.models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -36,15 +34,12 @@ public class Conference {
 	}
 
 	public ArrayList<Researcher> getCandidateReviewers(Article article) {
-		ArrayList<Researcher> candidates = null;
-		Researcher possibleCandidate;
-		int i;
-		int size = committeeMembers.size();
+		ArrayList<Researcher> candidates = new ArrayList<Researcher>();
 		
-		for (i=0;i<size;i++) {
-			possibleCandidate = committeeMembers.get(i);
+		for (Researcher possibleCandidate : committeeMembers) {
+			boolean containsResearchTopic = possibleCandidate.getResearchTopics().contains(article.getResearchTopic());
 			
-			if (article.getAuthor() != possibleCandidate && article.getAuthorUniversity() != possibleCandidate.getUniversity() && !(possibleCandidate.getResearchTopics().contains(article.getResearchTopic())) && !(article.isResearcherAllocated(possibleCandidate))) {
+			if (article.getAuthor() != possibleCandidate && article.getAuthorUniversity() != possibleCandidate.getUniversity() && containsResearchTopic && !(article.isResearcherAllocated(possibleCandidate))) {
 				candidates.add(possibleCandidate);
 			}
 		}
@@ -53,9 +48,8 @@ public class Conference {
 	}
 
 	public ArrayList<Researcher> sortReviewers(ArrayList<Researcher> researchCandidates) {
-		ArrayList<Researcher> sortedResearchers = null;
+		ArrayList<Researcher> sortedResearchers = new ArrayList<Researcher>();
 		Researcher researcherWithLeastArticles = researchCandidates.get(0);
-		int i;
 		
 		while (researchCandidates.size() > 0) {
 			for (Researcher researchCandidate : researchCandidates) {
@@ -88,7 +82,7 @@ public class Conference {
 	public ArrayList<Article> getAcceptedArticles() {
 		float sumGrades;
 		float average;
-		ArrayList<Article> acceptedArticles = null;
+		ArrayList<Article> acceptedArticles = new ArrayList<Article>();
 		
 		for (Article candidateArticle : articlesSubmitted) {
 			sumGrades = 0;
@@ -115,8 +109,28 @@ public class Conference {
 	}
 
 	public ArrayList<Article> getRejectedArticles() {
-		// TODO: Implement
-		return null;
+		float sumGrades;
+		float average;
+		ArrayList<Article> rejectedArticles = new ArrayList<Article>();
+		
+		for (Article candidateArticle : articlesSubmitted) {
+			sumGrades = 0;
+			Map<Researcher, Float> articleGrades = candidateArticle.getGrades();
+			float grade;
+			
+			for(Entry<Researcher, Float> entry: articleGrades.entrySet()) {
+				grade = entry.getValue();
+				sumGrades = sumGrades + grade;
+			}
+			
+			average = sumGrades/articleGrades.size();
+			
+			if (average < 0) {
+				rejectedArticles.add(candidateArticle);
+			}
+		}
+
+		return rejectedArticles;
 	}
 
 	public Researcher getCoordinator() {
