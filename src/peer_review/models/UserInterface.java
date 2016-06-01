@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
+	public Service service;
+	
+	public UserInterface(Service service) {
+		
+	}
 	
 	public void getCommand() {
 		

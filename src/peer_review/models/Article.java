@@ -1,7 +1,9 @@
 package peer_review.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Article {
 
@@ -19,9 +21,17 @@ public class Article {
 	public University getAuthorUniversity() {
 		return author.getUniversity();
 	}
+	
+	public Researcher getAuthor() {
+		return author;
+	}
 
 	public ResearchTopic getResearchTopic() {
 		return researchTopic;
+	}
+	
+	public Map<Researcher, Float> getGrades() {
+		return grades;
 	}
 
 	public Boolean isResearcherAllocated(Researcher researcher) {
@@ -52,8 +62,18 @@ public class Article {
 
 	// TODO: Missing method to calculate grade average? This is not in the specs
 	public float getGradeAverage() {
-		// TODO: Implement
-		return 0;
+		float sumGrades = 0;
+		float average;
+		float grade;
+		
+		for(Entry<Researcher, Float> entry: grades.entrySet()) {
+			grade = entry.getValue();
+			sumGrades = sumGrades + grade;
+		}
+		
+		average = sumGrades/grades.size();
+		
+		return average;
 	}
 
 	public String toStringSimple() {

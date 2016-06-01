@@ -12,6 +12,10 @@ public class Researcher {
 	public ArrayList<ResearchTopic> getResearchTopics() {
 		return researchTopics;
 	}
+	
+	public ArrayList<Article> getAlocatedArticles() {
+		return allocatedArticles;
+	}
 
 	public University getUniversity() {
 		return affiliation;
