@@ -80,21 +80,11 @@ public class Conference {
 	}
 
 	public ArrayList<Article> getAcceptedArticles() {
-		float sumGrades;
-		float average;
 		ArrayList<Article> acceptedArticles = new ArrayList<Article>();
+		float average;
 		
 		for (Article candidateArticle : articlesSubmitted) {
-			sumGrades = 0;
-			Map<Researcher, Float> articleGrades = candidateArticle.getGrades();
-			float grade;
-			
-			for(Entry<Researcher, Float> entry: articleGrades.entrySet()) {
-				grade = entry.getValue();
-				sumGrades = sumGrades + grade;
-			}
-			
-			average = sumGrades/articleGrades.size();
+			average = candidateArticle.getGradeAverage();
 			
 			if (average >= 0) {
 				acceptedArticles.add(candidateArticle);
@@ -109,21 +99,11 @@ public class Conference {
 	}
 
 	public ArrayList<Article> getRejectedArticles() {
-		float sumGrades;
-		float average;
 		ArrayList<Article> rejectedArticles = new ArrayList<Article>();
+		float average;
 		
 		for (Article candidateArticle : articlesSubmitted) {
-			sumGrades = 0;
-			Map<Researcher, Float> articleGrades = candidateArticle.getGrades();
-			float grade;
-			
-			for(Entry<Researcher, Float> entry: articleGrades.entrySet()) {
-				grade = entry.getValue();
-				sumGrades = sumGrades + grade;
-			}
-			
-			average = sumGrades/articleGrades.size();
+			average = candidateArticle.getGradeAverage();
 			
 			if (average < 0) {
 				rejectedArticles.add(candidateArticle);
