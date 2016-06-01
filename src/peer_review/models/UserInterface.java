@@ -1,13 +1,15 @@
 package peer_review.models;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Map.Entry;
 
 public class UserInterface {
 	public Service service;
 	
 	public UserInterface(Service service) {
-		
+		this.service = service;
 	}
 	
 	public void getCommand() {
@@ -15,7 +17,7 @@ public class UserInterface {
 	}
 	
 	public void showMessage(String message) {
-		
+		System.out.println(message);
 	}
 	
 	public String readString() {
@@ -45,7 +47,9 @@ public class UserInterface {
 	}
 	
 	public void showArticleReviewersList(Article article) {
-		
+		for (Researcher reviewer : article.getReviewers()) {
+			System.out.println(reviewer.getName());
+		}
 	}
 	
 	public void showConferences() {
@@ -53,6 +57,9 @@ public class UserInterface {
 	}
 
 	public void showArticlesWithGrades(ArrayList<Article> articlesList) {
-	
+		for (Article article : articlesList) {
+			if (article.getGrades() != null)
+				System.out.println(article.getTitle());
+		}
 	}
 }
