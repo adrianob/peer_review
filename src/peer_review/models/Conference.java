@@ -2,6 +2,7 @@ package peer_review.models;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.stream.*;
 import java.util.Map.Entry;
 
 public class Conference {
@@ -80,16 +81,9 @@ public class Conference {
 	}
 
 	public ArrayList<Article> getAcceptedArticles() {
-		ArrayList<Article> acceptedArticles = new ArrayList<Article>();
-		float average;
-		
-		for (Article candidateArticle : articlesSubmitted) {
-			average = candidateArticle.getGradeAverage();
-			
-			if (average >= 0) {
-				acceptedArticles.add(candidateArticle);
-			}
-		}
+	    ArrayList<Article> acceptedArticles = (ArrayList<Article>) articlesSubmitted.stream().
+	    		filter(a -> a.getGradeAverage() >= 0).
+	    		collect(Collectors.toList());
 
 		return acceptedArticles;
 	}
@@ -99,17 +93,9 @@ public class Conference {
 	}
 
 	public ArrayList<Article> getRejectedArticles() {
-		ArrayList<Article> rejectedArticles = new ArrayList<Article>();
-		float average;
-		
-		for (Article candidateArticle : articlesSubmitted) {
-			average = candidateArticle.getGradeAverage();
-			
-			if (average < 0) {
-				rejectedArticles.add(candidateArticle);
-			}
-		}
-
+	    ArrayList<Article> rejectedArticles = (ArrayList<Article>) articlesSubmitted.stream().
+	    		filter(a -> a.getGradeAverage() < 0).
+	    		collect(Collectors.toList());
 		return rejectedArticles;
 	}
 
