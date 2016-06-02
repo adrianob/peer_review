@@ -1,9 +1,7 @@
 package peer_review.models;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.stream.*;
-import java.util.Map.Entry;
 
 public class Conference {
 	private String initials;
@@ -11,6 +9,10 @@ public class Conference {
 	private ArrayList<Article> articlesAllocated;
 	private ArrayList<Researcher> committeeMembers;
 	private Researcher coordinator;
+
+	public void setCoordinator(Researcher coordinator) {
+		this.coordinator = coordinator;
+	}
 
 	public Conference(String initials, ArrayList<Article> articlesSubmitted, ArrayList<Article> articlesAllocated,
 			ArrayList<Researcher> committeeMembers, Researcher coordinator) {
@@ -90,6 +92,10 @@ public class Conference {
 
 	public String getInitials() {
 		return this.initials;
+	}
+
+	public void setInitials(String initials) {
+		this.initials = initials;
 	}
 
 	public ArrayList<Article> getRejectedArticles() {
