@@ -35,8 +35,7 @@ public class Article {
 	}
 
 	public Boolean isResearcherAllocated(Researcher researcher) {
-		// TODO: Implement
-		return false;
+		return reviewers.contains(researcher);
 	}
 
 	public int getID() {

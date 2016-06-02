@@ -3,6 +3,8 @@ package peer_review.tests;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +49,7 @@ public class ArticleTest {
 		author = new Researcher(1, "Jonn", authorUniversity, authorResearchTopics, authorAllocatedArticles);
 		articleConference = new Conference("ConfName", authorAllocatedArticles, authorAllocatedArticles,
 				articleReviewers, conferenceCoordinator);
-		article = new Article(articleID, articleTitle, author, articleReviewers, articleConference, articleResearchTopic, null);
+		article = new Article(articleID, articleTitle, author, new ArrayList<Researcher>(), articleConference, articleResearchTopic, new HashMap<Researcher, Float>());
 
 		System.out.print(article.toString());
 	}
