@@ -48,16 +48,19 @@ public class Article {
 	}
 
 	public int numberOfReviewers() {
-		// TODO: Implement
-		return -1;
+		return reviewers.size();
+	}
+	
+	public List<Researcher> getReviewers() {
+		return reviewers;
 	}
 
 	public void allocateReviewer(Researcher reviewer) {
-		// TODO: Implement
+		reviewers.add(reviewer);
 	}
 
 	public void setGrade(Researcher researcher, float grade) {
-		// TODO: Implement
+		grades.put(researcher, grade);
 	}
 
 	// TODO: Missing method to calculate grade average? This is not in the specs
