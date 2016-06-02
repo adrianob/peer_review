@@ -7,6 +7,26 @@ import java.util.Map.Entry;
 
 public class Article {
 
+	private int id;
+	private String title;
+	private Researcher author;
+	private List<Researcher> reviewers;
+	private Conference conference;
+	private ResearchTopic researchTopic;
+	private Map<Researcher, Float> grades;
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setAuthor(Researcher author) {
+		this.author = author;
+	}
+
 	public Article(int id, String title, Researcher author, List<Researcher> reviewers, Conference conference,
 			ResearchTopic researchTopic, Map<Researcher, Float> grades) {
 		this.id = id;
@@ -96,11 +116,4 @@ public class Article {
 		return result;
 	}
 
-	private int id;
-	private String title;
-	private Researcher author;
-	private List<Researcher> reviewers;
-	private Conference conference;
-	private ResearchTopic researchTopic;
-	private Map<Researcher, Float> grades;
 }
