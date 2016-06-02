@@ -15,7 +15,7 @@ public class ResearcherBuilder {
     public ResearcherBuilder() {
         researcher = new Researcher(1,
         		"researcher name",
-        		new University("Ufrgs"),
+        		new University("UFRGS"),
 				new ArrayList<>(Arrays.asList(new ResearchTopic("topic 1"), new ResearchTopic("topic 2"))),
 				new ArrayList<>(Arrays.asList())
         		);
