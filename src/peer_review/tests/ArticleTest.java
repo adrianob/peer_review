@@ -15,79 +15,83 @@ import peer_review.models.University;
 
 public class ArticleTest {
 	Article article;
+	String articleTitle;
+	Conference articleConference;
+	int articleID;
+	ResearchTopic articleResearchTopic;
+	ArrayList<Researcher> articleReviewers;
+
+	Researcher author;
 	University authorUniversity;
 	ArrayList<ResearchTopic> authorResearchTopics;
 	ArrayList<Article> authorAllocatedArticles;
-	ArrayList<Researcher> articleReviewers;
-	Researcher author;
-	Conference articleConference;
 	Researcher conferenceCoordinator;
-	ResearchTopic articleResearchTopic;
 
 	@Before
 	public void setUp() throws Exception {
 		// Construct new article for testing
 		articleResearchTopic = new ResearchTopic("Software");
+		articleID = 1;
 		authorUniversity = new University("UFRGS");
+		University reviewersUniversity = new University("USP");
 		
 		authorResearchTopics = new ArrayList<ResearchTopic>();
 		authorAllocatedArticles = new ArrayList<Article>();
-		// TODO: Need to populate this
+		
 		articleReviewers = new ArrayList<Researcher>();
-
+		articleReviewers.add(new Researcher(3, "Reviewer1", reviewersUniversity, new ArrayList<ResearchTopic>(), new ArrayList<Article>()));
+		articleReviewers.add(new Researcher(4, "Reviewer2", reviewersUniversity, new ArrayList<ResearchTopic>(), new ArrayList<Article>()));
+		
 		conferenceCoordinator = new Researcher(2, "Coordinator", authorUniversity, authorResearchTopics,
 				authorAllocatedArticles);
 		author = new Researcher(1, "Jonn", authorUniversity, authorResearchTopics, authorAllocatedArticles);
 		articleConference = new Conference("ConfName", authorAllocatedArticles, authorAllocatedArticles,
 				articleReviewers, conferenceCoordinator);
-		article = new Article(1, "MeuArtigo", author, articleReviewers, articleConference, articleResearchTopic, null);
+		article = new Article(articleID, articleTitle, author, articleReviewers, articleConference, articleResearchTopic, null);
 
 		System.out.print(article.toString());
 	}
 
 	@Test
 	public void testID() {
-		// Is the ID the same one as created in the setUp
-		assertTrue(article.getID() == 1);
+		assertTrue(article.getID() == articleID);
 	}
 
 	@Test
 	public void testAuthor() {
-		// Check if the Author is the same one as created
 		assertTrue(article.getAuthorUniversity() == author.getUniversity());
 	}
 
 	@Test
 	public void testResearchTopic() {
-		// Check if the ResearchTopic is the same one as created
 		assertTrue(article.getResearchTopic() == articleResearchTopic);
+	}
+	
+	@Test
+	public void testTitle() {
+		assertTrue(article.getTitle() == articleTitle);
 	}
 
 	@Test
 	public void testGrade() {
-		// NOTE: calling getGradeAverage() with zero grades does't make sense.
-		// Maybe should throw an exception
-		// Test setGrade() and getGradeAverage(), by setting grades and checking
-		// if the average matches
+
+		assert (articleReviewers.size() == 2);
+		// Add a reviewer
+		assertTrue(article.numberOfReviewers() == 0);
+		assertFalse(article.isResearcherAllocated(articleReviewers.get(0)));
+		article.allocateReviewer(articleReviewers.get(0));
+		assertTrue(article.numberOfReviewers() == 1);
+		assertTrue(article.isResearcherAllocated(articleReviewers.get(0)));
 		article.setGrade(articleReviewers.get(0), 2.0f);
 		assertTrue(article.getGradeAverage() == 2.0f);
+
+		// Test adding another reviewer
+		assertFalse(article.isResearcherAllocated(articleReviewers.get(1)));
+		article.allocateReviewer(articleReviewers.get(1));
+		assertTrue(article.numberOfReviewers() == 2);
+		assertTrue(article.isResearcherAllocated(articleReviewers.get(1)));
 		article.setGrade(articleReviewers.get(1), 4.0f);
-		assertTrue(article.getGradeAverage() == 3.0f); // 2+4/2 = 3
-	}
-
-	@Test
-	public void testIsResearcherAllocated() {
-		// Test if numberOfReviewers returns 0
-		assertTrue(article.numberOfReviewers() == 0);
-		// TODO: AllocateReviewer(x)
-		// article.allocateReviewer(reviewer);
-		// TODO: Test if isResearcherAllocated(x) is true
-
-		// assertTrue(article.isResearcherAllocated(reviewer));
-		// TODO: Test if a non-allocated Researcher is false
-		// assertFalse(article.isResearcherAllocated(reviewer2));
-		// Test if numberOfReviewers returns 1
-		assertTrue(article.numberOfReviewers() == 1);
+		assertTrue(article.getGradeAverage() == 3.0f); // (2+4)/2 = 3
 	}
 
 }
