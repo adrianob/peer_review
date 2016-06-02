@@ -58,44 +58,58 @@ public class Database {
 	}
 
 	private void initData() {
-		ResearchTopic rt1 = new ResearchTopic("Modularity");
-		add(rt1);
-		ResearchTopic rt2 = new ResearchTopic("Software	Reuse");
-		add(rt2);
-		ResearchTopic rt3 = new ResearchTopic("Aspect-oriented	Programming");
-		add(rt3);
-		ResearchTopic rt4 = new ResearchTopic("Software	Product	Lines");
-		add(rt4);
-		ResearchTopic rt5 = new ResearchTopic("Software	Architecture");
-		add(rt5);
-		ResearchTopic rt6 = new ResearchTopic("Software	Reuse");
-		add(rt6);
-		ResearchTopic rt7 = new ResearchTopic("Software	Testing");
-		add(rt7);
+		ResearchTopic modularity = new ResearchTopic("Modularity");
+		add(modularity);
+		ResearchTopic softwareReuse = new ResearchTopic("Software Reuse");
+		add(softwareReuse);
+		ResearchTopic aspectOrientedProgramming = new ResearchTopic("Aspect-oriented Programming");
+		add(aspectOrientedProgramming);
+		ResearchTopic softwareProductLine = new ResearchTopic("Software	Product	Lines");
+		add(softwareProductLine);
+		ResearchTopic softwareArchitecture = new ResearchTopic("Software Architecture");
+		add(softwareArchitecture);
+		ResearchTopic softwareTesting = new ResearchTopic("Software	Testing");
+		add(softwareTesting);
+		ResearchTopic softwareQuality = new ResearchTopic("Software	Quality");
+		add(softwareQuality);
 		
-		University university1 = new University("UFRGS");
-		add(university1);
-		University university2 = new University("USP");
-		add(university2);
-		University university3 = new University("UFRJ");
-		add(university3);
+		University ufrgs = new University("UFRGS");
+		add(ufrgs);
+		University usp = new University("USP");
+		add(usp);
+		University ufrj = new University("UFRJ");
+		add(ufrj);
 
-		Researcher researcher1 = new Researcher(1, "Jo√£o", university1, 
-				new ArrayList<>(Arrays.asList(rt1, rt2, rt4)), new ArrayList<Article>());
+		Researcher researcher1 = new Researcher(1, "Jo„o", ufrgs, 
+				new ArrayList<>(Arrays.asList(modularity, softwareReuse, softwareProductLine)), new ArrayList<Article>());
 		add(researcher1);
-		Researcher researcher2 = new Researcher(2, "Ana", university2, 
-				new ArrayList<>(Arrays.asList(rt1, rt2, rt5)), new ArrayList<Article>());
+		Researcher researcher2 = new Researcher(2, "Ana", usp, 
+				new ArrayList<>(Arrays.asList(modularity, softwareReuse, softwareArchitecture)), new ArrayList<Article>());
 		add(researcher2);
-		Researcher researcher3 = new Researcher(3, "Manoel", university1, 
-				new ArrayList<>(Arrays.asList(rt4, rt7)), new ArrayList<Article>());
+		Researcher researcher3 = new Researcher(3, "Manoel", ufrgs, 
+				new ArrayList<>(Arrays.asList(softwareProductLine, softwareTesting)), new ArrayList<Article>());
 		add(researcher3);
-		Researcher researcher4 = new Researcher(4, "Joana", university3, 
-				new ArrayList<>(Arrays.asList(rt4, rt6, rt5, rt3)), new ArrayList<Article>());
+		Researcher researcher4 = new Researcher(4, "Joana", ufrj, 
+				new ArrayList<>(Arrays.asList(softwareProductLine, softwareReuse, softwareArchitecture, aspectOrientedProgramming)), new ArrayList<Article>());
 		add(researcher4);
-		Researcher researcher5 = new Researcher(5, "Miguel", university1, 
-				new ArrayList<>(Arrays.asList(rt1, rt7, rt5)), new ArrayList<Article>());
+		Researcher researcher5 = new Researcher(5, "Miguel", ufrgs, 
+				new ArrayList<>(Arrays.asList(modularity, softwareTesting, softwareArchitecture)), new ArrayList<Article>());
 		add(researcher5);
-		
+		Researcher researcher6 = new Researcher(6, "Beatriz", ufrj, 
+				new ArrayList<>(Arrays.asList(softwareReuse, softwareTesting, aspectOrientedProgramming)), new ArrayList<Article>());
+		add(researcher6);
+		Researcher researcher7 = new Researcher(7, "Suzana", ufrgs, 
+				new ArrayList<>(Arrays.asList(aspectOrientedProgramming, modularity, softwareReuse)), new ArrayList<Article>());
+		add(researcher7);
+		Researcher researcher8 = new Researcher(8, "Natasha", ufrj, 
+				new ArrayList<>(Arrays.asList(modularity, softwareReuse, softwareQuality, softwareProductLine)), new ArrayList<Article>());
+		add(researcher8);
+		Researcher researcher9 = new Researcher(9, "Pedro", usp, 
+				new ArrayList<>(Arrays.asList(aspectOrientedProgramming, softwareArchitecture)), new ArrayList<Article>());
+		add(researcher9);
+		Researcher researcher10 = new Researcher(10, "Carlos", usp, 
+				new ArrayList<>(Arrays.asList(softwareReuse, modularity, softwareTesting)), new ArrayList<Article>());
+		add(researcher10);
 	}
 
 	public void add(Article article) {
