@@ -1,6 +1,7 @@
 package peer_review.models;
 
 import java.util.ArrayList;
+import java.util.function.DoublePredicate;
 import java.util.stream.*;
 
 public class Conference {
@@ -82,14 +83,6 @@ public class Conference {
 		return lowestIDSubmittedArticle;
 	}
 
-	public ArrayList<Article> getAcceptedArticles() {
-	    ArrayList<Article> acceptedArticles = (ArrayList<Article>) articlesSubmitted.stream().
-	    		filter(a -> a.getGradeAverage() >= 0).
-	    		collect(Collectors.toList());
-
-		return acceptedArticles;
-	}
-
 	public String getInitials() {
 		return this.initials;
 	}
@@ -98,11 +91,18 @@ public class Conference {
 		this.initials = initials;
 	}
 
-	public ArrayList<Article> getRejectedArticles() {
-	    ArrayList<Article> rejectedArticles = (ArrayList<Article>) articlesSubmitted.stream().
-	    		filter(a -> a.getGradeAverage() < 0).
+	private ArrayList<Article> getFilteredArticles(DoublePredicate predicate) {
+	    return (ArrayList<Article>) articlesSubmitted.stream().
+	    		filter(a -> predicate.test(a.getGradeAverage())).
 	    		collect(Collectors.toList());
-		return rejectedArticles;
+	}
+
+	public ArrayList<Article> getAcceptedArticles() {
+	    return getFilteredArticles((grade) -> grade >= 0);
+	}
+
+	public ArrayList<Article> getRejectedArticles() {
+	    return getFilteredArticles((grade) -> grade < 0);
 	}
 
 	public Researcher getCoordinator() {
