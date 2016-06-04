@@ -7,13 +7,17 @@ import java.util.Map.Entry;
 
 public class UserInterface {
 	public Service service;
-	
+	public ArrayList<Command> commands = new ArrayList<Command>();
 	public UserInterface(Service service) {
 		this.service = service;
+		commands.add(new RateArticleCommand());
+		commands.add(new SelectArticleCommand());
+		commands.add(new AllocateArticleToMemberCommand());
 	}
 	
 	public void getCommand() {
-		
+		int selection = readInteger();
+		commands.get(selection).execute();
 	}
 	
 	public void showMessage(String message) {
@@ -39,7 +43,10 @@ public class UserInterface {
 	}
 	
 	public void showUI() {
-		
+		showMessage("Opções:");
+		for (int i = 0; i < commands.size(); i++) {
+			showMessage(i + ":" + commands.get(i).getName());
+		}
 	}
 	
 	public void showArticlesList() {
