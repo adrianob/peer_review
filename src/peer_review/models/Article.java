@@ -4,8 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.*;
 
 public class Article {
+
+	private int id;
+	private String title;
+	private Researcher author;
+	private List<Researcher> reviewers;
+	private Conference conference;
+	private ResearchTopic researchTopic;
+	private Map<Researcher, Float> grades;
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setAuthor(Researcher author) {
+		this.author = author;
+	}
 
 	public Article(int id, String title, Researcher author, List<Researcher> reviewers, Conference conference,
 			ResearchTopic researchTopic, Map<Researcher, Float> grades) {
@@ -62,20 +83,8 @@ public class Article {
 		grades.put(researcher, grade);
 	}
 
-	// TODO: Missing method to calculate grade average? This is not in the specs
 	public float getGradeAverage() {
-		float sumGrades = 0;
-		float average;
-		float grade;
-		
-		for(Entry<Researcher, Float> entry: grades.entrySet()) {
-			grade = entry.getValue();
-			sumGrades = sumGrades + grade;
-		}
-		
-		average = sumGrades/grades.size();
-		
-		return average;
+		return (float) grades.entrySet().stream().mapToDouble(Entry::getValue).average().getAsDouble();
 	}
 
 	public String toStringSimple() {
@@ -96,11 +105,4 @@ public class Article {
 		return result;
 	}
 
-	private int id;
-	private String title;
-	private Researcher author;
-	private List<Researcher> reviewers;
-	private Conference conference;
-	private ResearchTopic researchTopic;
-	private Map<Researcher, Float> grades;
 }

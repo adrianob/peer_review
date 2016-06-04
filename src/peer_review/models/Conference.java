@@ -1,9 +1,8 @@
 package peer_review.models;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.function.DoublePredicate;
 import java.util.stream.*;
-import java.util.Map.Entry;
 
 public class Conference {
 	private String initials;
@@ -11,6 +10,10 @@ public class Conference {
 	private ArrayList<Article> articlesAllocated;
 	private ArrayList<Researcher> committeeMembers;
 	private Researcher coordinator;
+
+	public void setCoordinator(Researcher coordinator) {
+		this.coordinator = coordinator;
+	}
 
 	public Conference(String initials, ArrayList<Article> articlesSubmitted, ArrayList<Article> articlesAllocated,
 			ArrayList<Researcher> committeeMembers, Researcher coordinator) {
@@ -80,23 +83,26 @@ public class Conference {
 		return lowestIDSubmittedArticle;
 	}
 
-	public ArrayList<Article> getAcceptedArticles() {
-	    ArrayList<Article> acceptedArticles = (ArrayList<Article>) articlesSubmitted.stream().
-	    		filter(a -> a.getGradeAverage() >= 0).
-	    		collect(Collectors.toList());
-
-		return acceptedArticles;
-	}
-
 	public String getInitials() {
 		return this.initials;
 	}
 
-	public ArrayList<Article> getRejectedArticles() {
-	    ArrayList<Article> rejectedArticles = (ArrayList<Article>) articlesSubmitted.stream().
-	    		filter(a -> a.getGradeAverage() < 0).
+	public void setInitials(String initials) {
+		this.initials = initials;
+	}
+
+	private ArrayList<Article> getFilteredArticles(DoublePredicate predicate) {
+	    return (ArrayList<Article>) articlesSubmitted.stream().
+	    		filter(a -> predicate.test(a.getGradeAverage())).
 	    		collect(Collectors.toList());
-		return rejectedArticles;
+	}
+
+	public ArrayList<Article> getAcceptedArticles() {
+	    return getFilteredArticles((grade) -> grade >= 0);
+	}
+
+	public ArrayList<Article> getRejectedArticles() {
+	    return getFilteredArticles((grade) -> grade < 0);
 	}
 
 	public Researcher getCoordinator() {

@@ -9,6 +9,20 @@ public class Researcher {
 	private ArrayList<ResearchTopic> researchTopics;
 	public ArrayList<Article> allocatedArticles;
 
+	public Researcher(int id, String name, University affiliation, ArrayList<ResearchTopic> researchTopic,
+			ArrayList<Article> allocatedArticles) {
+		this.id = id;
+		this.name = name;
+		this.affiliation = affiliation;
+		this.researchTopics = researchTopic;
+		this.allocatedArticles = allocatedArticles;
+
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public ArrayList<ResearchTopic> getResearchTopics() {
 		return researchTopics;
 	}
@@ -31,16 +45,6 @@ public class Researcher {
 
 	public void allocateArticle(Article article) {
 		// TODO: Implement
-	}
-
-	public Researcher(int id, String name, University affiliation, ArrayList<ResearchTopic> researchTopic,
-			ArrayList<Article> allocatedArticles) {
-		this.id = id;
-		this.name = name;
-		this.affiliation = affiliation;
-		this.researchTopics = researchTopic;
-		this.allocatedArticles = allocatedArticles;
-
 	}
 
 	public String toStringSimple() {
