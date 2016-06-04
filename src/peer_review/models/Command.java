@@ -6,4 +6,6 @@ public abstract class Command {
 	public void execute() {
 		
 	}
+	
+	public abstract String getName();
 }
