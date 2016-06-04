@@ -22,3 +22,9 @@ Mudanças feitas no projeto:
 	
 - ResearchTopic:
 	- Adicionado método toString()
+	
+	
+- Command:
+	- Adicionado método abstrato getName(), que deve retornar um nome legível do comando
+	
+	
