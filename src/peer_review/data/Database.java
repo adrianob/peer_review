@@ -58,6 +58,7 @@ public class Database {
 	}
 
 	private void initData() {
+		//adding research topics
 		ResearchTopic modularity = new ResearchTopic("Modularity");
 		add(modularity);
 		ResearchTopic softwareReuse = new ResearchTopic("Software Reuse");
@@ -73,6 +74,7 @@ public class Database {
 		ResearchTopic softwareQuality = new ResearchTopic("Software	Quality");
 		add(softwareQuality);
 		
+		//adding universities
 		University ufrgs = new University("UFRGS");
 		add(ufrgs);
 		University usp = new University("USP");
@@ -80,7 +82,8 @@ public class Database {
 		University ufrj = new University("UFRJ");
 		add(ufrj);
 
-		Researcher researcher1 = new Researcher(1, "Jo„o", ufrgs, 
+		//adding researchers
+		Researcher researcher1 = new Researcher(1, "Jo√£o", ufrgs, 
 				new ArrayList<>(Arrays.asList(modularity, softwareReuse, softwareProductLine)), new ArrayList<Article>());
 		add(researcher1);
 		Researcher researcher2 = new Researcher(2, "Ana", usp, 
@@ -110,6 +113,54 @@ public class Database {
 		Researcher researcher10 = new Researcher(10, "Carlos", usp, 
 				new ArrayList<>(Arrays.asList(softwareReuse, modularity, softwareTesting)), new ArrayList<Article>());
 		add(researcher10);
+		
+		//adding conferences
+		Conference icse = new Conference("ICSE", new ArrayList<Article>(), new ArrayList<Article>(), 
+				new ArrayList<Researcher>(Arrays.asList(researcher1, researcher2, researcher3, researcher4, researcher5, researcher6, researcher7)), null);
+		add(icse);
+		
+		Conference fse = new Conference("FSE", new ArrayList<Article>(), new ArrayList<Article>(), 
+				new ArrayList<Researcher>(Arrays.asList(researcher1, researcher2, researcher3, researcher4, researcher5, researcher6, researcher7)), null);
+		add(fse);
+
+		Conference sbes = new Conference("SBES", new ArrayList<Article>(), new ArrayList<Article>(), 
+				new ArrayList<Researcher>(Arrays.asList(researcher4, researcher5, researcher6, researcher7, researcher8, researcher9, researcher10)), null);
+		add(sbes);
+
+		//adding articles
+		Article article1 = new Article(1, "Coupling	and	Cohesion", researcher1, 
+				new ArrayList<Researcher>(Arrays.asList(researcher8, researcher10)), sbes, modularity, new HashMap<Researcher, Float>());
+		add(article1);
+		Article article2 = new Article(2, "Design Patterns", researcher6, 
+				new ArrayList<Researcher>(Arrays.asList(researcher7, researcher2)), fse, softwareReuse, new HashMap<Researcher, Float>());
+		add(article2);
+		Article article3 = new Article(3, "AspectJ", researcher7, 
+				new ArrayList<Researcher>(Arrays.asList(researcher4, researcher6)), fse, aspectOrientedProgramming, new HashMap<Researcher, Float>());
+		add(article3);
+		Article article4 = new Article(4, "Feature Model", researcher8, 
+				new ArrayList<Researcher>(Arrays.asList(researcher1, researcher3)), fse, softwareProductLine, new HashMap<Researcher, Float>());
+		add(article4);
+		Article article5 = new Article(5, "Architecture	Recovery", researcher9, 
+				new ArrayList<Researcher>(Arrays.asList(researcher4, researcher5)), fse, softwareArchitecture, new HashMap<Researcher, Float>());
+		add(article5);
+		Article article6 = new Article(6, "Funcional Testing", researcher10, 
+				new ArrayList<Researcher>(Arrays.asList(researcher3, researcher6)), fse, softwareTesting, new HashMap<Researcher, Float>());
+		add(article6);
+		Article article7 = new Article(7, "COTs", researcher6, 
+				new ArrayList<Researcher>(), icse, softwareReuse, new HashMap<Researcher, Float>());
+		add(article7);
+		Article article8 = new Article(8, "Pointcut", researcher7, 
+				new ArrayList<Researcher>(), icse, aspectOrientedProgramming, new HashMap<Researcher, Float>());
+		add(article8);
+		Article article9 = new Article(9, "Architecture	Comformance", researcher8, 
+				new ArrayList<Researcher>(), icse, softwareProductLine, new HashMap<Researcher, Float>());
+		add(article9);
+		Article article10 = new Article(10, "Design	Patterns", researcher9, 
+				new ArrayList<Researcher>(), icse, softwareArchitecture, new HashMap<Researcher, Float>());
+		add(article10);
+		Article article11 = new Article(11, "Structural	Testing", researcher10, 
+				new ArrayList<Researcher>(), icse, softwareTesting, new HashMap<Researcher, Float>());
+		add(article11);
 	}
 
 	public void add(Article article) {
@@ -131,5 +182,12 @@ public class Database {
 	public void add(Researcher researcher) {
 		this.researchers.put(researcher.getID(), researcher);
 	}
+	
+	public Article getArticleById(int id){
+		return this.articles.get(id);
+	}
 
+	public Researcher getResearcherById(int id){
+		return this.researchers.get(id);
+	}
 }

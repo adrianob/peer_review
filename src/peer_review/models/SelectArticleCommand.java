@@ -1,12 +1,16 @@
 package peer_review.models;
 
 public class SelectArticleCommand extends Command {
+	protected SelectArticleCommand(UserInterface ui) {
+		super(ui);
+	}
+
 	public void execute() {
 		
 	}
 
 	@Override
 	public String getName() {
-		return "Seleção de artigos";
+		return "Seleï¿½ï¿½o de artigos";
 	}
 }
