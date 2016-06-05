@@ -1,12 +1,16 @@
 package peer_review.models;
 
 public class AllocateArticleToMemberCommand extends Command {
+	protected AllocateArticleToMemberCommand(UserInterface ui) {
+		super(ui);
+	}
+
 	public void execute() {
 		
 	}
 
 	@Override
 	public String getName() {
-		return "Alocação de artigos a membros do comitê de programa";
+		return "Alocaï¿½ï¿½o de artigos a membros do comitï¿½ de programa";
 	}
 }

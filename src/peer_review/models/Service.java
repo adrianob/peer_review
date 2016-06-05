@@ -1,5 +1,7 @@
 package peer_review.models;
 
+import java.util.Collection;
+
 import peer_review.data.*;
 import peer_review.data.*;
 
@@ -38,4 +40,7 @@ public class Service {
 		return null;
 	}
 
+	public Collection<Article> getArticles() {
+		return db.getArticles();
+	}
 }

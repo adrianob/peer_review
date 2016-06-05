@@ -10,9 +10,9 @@ public class UserInterface {
 	public ArrayList<Command> commands = new ArrayList<Command>();
 	public UserInterface(Service service) {
 		this.service = service;
-		commands.add(new RateArticleCommand());
-		commands.add(new SelectArticleCommand());
-		commands.add(new AllocateArticleToMemberCommand());
+		commands.add(new RateArticleCommand(this));
+		commands.add(new SelectArticleCommand(this));
+		commands.add(new AllocateArticleToMemberCommand(this));
 	}
 	
 	public void getCommand() {
@@ -43,14 +43,16 @@ public class UserInterface {
 	}
 	
 	public void showUI() {
-		showMessage("Opções:");
+		showMessage("OpÃ§Ãµes:");
 		for (int i = 0; i < commands.size(); i++) {
 			showMessage(i + ":" + commands.get(i).getName());
 		}
 	}
 	
 	public void showArticlesList() {
-		
+		for (Article article : service.getArticles()) {
+			System.out.println(article);
+		}
 	}
 	
 	public void showArticleReviewersList(Article article) {
