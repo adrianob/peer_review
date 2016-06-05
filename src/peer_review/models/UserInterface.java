@@ -57,7 +57,7 @@ public class UserInterface {
 	
 	public void showArticleReviewersList(Article article) {
 		for (Researcher reviewer : article.getReviewers()) {
-			System.out.println(reviewer.getName());
+			System.out.println(reviewer);
 		}
 	}
 	

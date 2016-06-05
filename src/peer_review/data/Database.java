@@ -129,22 +129,22 @@ public class Database {
 
 		//adding articles
 		Article article1 = new Article(1, "Coupling	and	Cohesion", researcher1, 
-				new ArrayList<Researcher>(), sbes, modularity, new HashMap<Researcher, Float>());
+				new ArrayList<Researcher>(Arrays.asList(researcher8, researcher10)), sbes, modularity, new HashMap<Researcher, Float>());
 		add(article1);
 		Article article2 = new Article(2, "Design Patterns", researcher6, 
-				new ArrayList<Researcher>(), fse, softwareReuse, new HashMap<Researcher, Float>());
+				new ArrayList<Researcher>(Arrays.asList(researcher7, researcher2)), fse, softwareReuse, new HashMap<Researcher, Float>());
 		add(article2);
 		Article article3 = new Article(3, "AspectJ", researcher7, 
-				new ArrayList<Researcher>(), fse, aspectOrientedProgramming, new HashMap<Researcher, Float>());
+				new ArrayList<Researcher>(Arrays.asList(researcher4, researcher6)), fse, aspectOrientedProgramming, new HashMap<Researcher, Float>());
 		add(article3);
 		Article article4 = new Article(4, "Feature Model", researcher8, 
-				new ArrayList<Researcher>(), fse, softwareProductLine, new HashMap<Researcher, Float>());
+				new ArrayList<Researcher>(Arrays.asList(researcher1, researcher3)), fse, softwareProductLine, new HashMap<Researcher, Float>());
 		add(article4);
 		Article article5 = new Article(5, "Architecture	Recovery", researcher9, 
-				new ArrayList<Researcher>(), fse, softwareArchitecture, new HashMap<Researcher, Float>());
+				new ArrayList<Researcher>(Arrays.asList(researcher4, researcher5)), fse, softwareArchitecture, new HashMap<Researcher, Float>());
 		add(article5);
 		Article article6 = new Article(6, "Funcional Testing", researcher10, 
-				new ArrayList<Researcher>(), fse, softwareTesting, new HashMap<Researcher, Float>());
+				new ArrayList<Researcher>(Arrays.asList(researcher3, researcher6)), fse, softwareTesting, new HashMap<Researcher, Float>());
 		add(article6);
 		Article article7 = new Article(7, "COTs", researcher6, 
 				new ArrayList<Researcher>(), icse, softwareReuse, new HashMap<Researcher, Float>());
@@ -182,5 +182,12 @@ public class Database {
 	public void add(Researcher researcher) {
 		this.researchers.put(researcher.getID(), researcher);
 	}
+	
+	public Article getArticleById(int id){
+		return this.articles.get(id);
+	}
 
+	public Researcher getResearcherById(int id){
+		return this.researchers.get(id);
+	}
 }
