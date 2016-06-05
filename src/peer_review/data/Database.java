@@ -115,15 +115,15 @@ public class Database {
 		add(researcher10);
 		
 		//adding conferences
-		Conference icse = new Conference("ICSE", new ArrayList<Article>(), new ArrayList<Article>(), 
+		Conference icse = new Conference("ICSE", 
 				new ArrayList<Researcher>(Arrays.asList(researcher1, researcher2, researcher3, researcher4, researcher5, researcher6, researcher7)), null);
 		add(icse);
 		
-		Conference fse = new Conference("FSE", new ArrayList<Article>(), new ArrayList<Article>(), 
+		Conference fse = new Conference("FSE", 
 				new ArrayList<Researcher>(Arrays.asList(researcher1, researcher2, researcher3, researcher4, researcher5, researcher6, researcher7)), null);
 		add(fse);
 
-		Conference sbes = new Conference("SBES", new ArrayList<Article>(), new ArrayList<Article>(), 
+		Conference sbes = new Conference("SBES", 
 				new ArrayList<Researcher>(Arrays.asList(researcher4, researcher5, researcher6, researcher7, researcher8, researcher9, researcher10)), null);
 		add(sbes);
 

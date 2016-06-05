@@ -15,11 +15,10 @@ public class Conference {
 		this.coordinator = coordinator;
 	}
 
-	public Conference(String initials, ArrayList<Article> articlesSubmitted, ArrayList<Article> articlesAllocated,
-			ArrayList<Researcher> committeeMembers, Researcher coordinator) {
+	public Conference(String initials, ArrayList<Researcher> committeeMembers, Researcher coordinator) {
 		this.initials = initials;
-		this.articlesSubmitted = articlesSubmitted;
-		this.articlesAllocated = articlesAllocated;
+		this.articlesSubmitted = new ArrayList<Article>();
+		this.articlesAllocated = new ArrayList<Article>();
 		this.committeeMembers = committeeMembers;
 		this.coordinator = coordinator;
 	}
