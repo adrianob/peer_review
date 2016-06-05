@@ -1,5 +1,7 @@
 package peer_review.models;
 
+import java.util.Collection;
+
 import peer_review.data.*;
 import peer_review.data.*;
 
@@ -15,8 +17,8 @@ public class Service {
 		// TODO: Implement
 	}
 
-	public void rateArticle(Article article, Researcher reviewer, float rate, UserInterface ui) {
-		// TODO: Implement
+	public void rateArticle(Article article, Researcher reviewer, float rate) {
+		article.setGrade(reviewer, rate);
 	}
 
 	public void selectArticle(Conference conference, UserInterface ui) {
@@ -28,14 +30,15 @@ public class Service {
 		return null;
 	}
 	
-	public Researcher readResearcher() {
-		// TODO: Implement
-		return null;
+	public Researcher readResearcher(int id) {
+		return db.getResearcherById(id);
 	}
 	
-	public Article readArticle() {
-		// TODO: Implement
-		return null;
+	public Article readArticle(int id) {
+		return db.getArticleById(id);
 	}
 
+	public Collection<Article> getArticles() {
+		return db.getArticles();
+	}
 }
