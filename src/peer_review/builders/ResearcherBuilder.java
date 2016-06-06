@@ -25,6 +25,11 @@ public class ResearcherBuilder {
         return this;
     }
 
+    public ResearcherBuilder id(int id) {
+        researcher.setId(id);
+        return this;
+    }
+
     public Researcher build() {
         return researcher;
     }

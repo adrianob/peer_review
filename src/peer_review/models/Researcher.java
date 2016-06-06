@@ -17,6 +17,10 @@ public class Researcher {
 		this.allocatedArticles = new ArrayList<Article>();
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -42,7 +46,7 @@ public class Researcher {
 	}
 
 	public void allocateArticle(Article article) {
-		// TODO: Implement
+		allocatedArticles.add(article);
 	}
 
 	public String toStringSimple() {
