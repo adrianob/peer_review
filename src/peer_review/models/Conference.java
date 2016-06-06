@@ -1,6 +1,7 @@
 package peer_review.models;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.function.DoublePredicate;
 import java.util.stream.*;
 
@@ -24,16 +25,7 @@ public class Conference {
 	}
 
 	public Article getLowestIDSubmittedArticle() {
-		int size = articlesSubmitted.size();
-		int i;
-		Article smallestIDArticle = articlesSubmitted.get(0);
-		
-		for (i=1;i<size;i++) {
-			if (articlesSubmitted.get(i).getID() < smallestIDArticle.getID()) {
-				smallestIDArticle = articlesSubmitted.get(i);
-			}
-		}
-		return smallestIDArticle;
+		return articlesSubmitted.stream().min(Comparator.comparingInt(Article::getID)).get();
 	}
 
 	public ArrayList<Researcher> getCandidateReviewers(Article article) {
