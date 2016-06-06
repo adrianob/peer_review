@@ -1,6 +1,7 @@
 package peer_review.models;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.function.DoublePredicate;
 import java.util.stream.*;
 
@@ -15,65 +16,38 @@ public class Conference {
 		this.coordinator = coordinator;
 	}
 
-	public Conference(String initials, ArrayList<Article> articlesSubmitted, ArrayList<Article> articlesAllocated,
-			ArrayList<Researcher> committeeMembers, Researcher coordinator) {
+	public Conference(String initials, ArrayList<Researcher> committeeMembers, Researcher coordinator) {
 		this.initials = initials;
-		this.articlesSubmitted = articlesSubmitted;
-		this.articlesAllocated = articlesAllocated;
+		this.articlesSubmitted = new ArrayList<Article>();
+		this.articlesAllocated = new ArrayList<Article>();
 		this.committeeMembers = committeeMembers;
 		this.coordinator = coordinator;
 	}
 
+	public void addCommitteeMember(Researcher member) {
+		committeeMembers.add(member);
+	}
+
 	public Article getLowestIDSubmittedArticle() {
-		int size = articlesSubmitted.size();
-		int i;
-		Article smallestIDArticle = articlesSubmitted.get(0);
-		
-		for (i=1;i<size;i++) {
-			if (articlesSubmitted.get(i).getID() < smallestIDArticle.getID()) {
-				smallestIDArticle = articlesSubmitted.get(i);
-			}
-		}
-		return smallestIDArticle;
+		return articlesSubmitted.stream().min(Comparator.comparingInt(Article::getID)).get();
 	}
 
 	public ArrayList<Researcher> getCandidateReviewers(Article article) {
-		ArrayList<Researcher> candidates = new ArrayList<Researcher>();
-		
-		for (Researcher possibleCandidate : committeeMembers) {
-			boolean containsResearchTopic = possibleCandidate.getResearchTopics().contains(article.getResearchTopic());
-			
-			if (article.getAuthor() != possibleCandidate && article.getAuthorUniversity() != possibleCandidate.getUniversity() && containsResearchTopic && !(article.isResearcherAllocated(possibleCandidate))) {
-				candidates.add(possibleCandidate);
-			}
-		}
-		
-		return candidates;
+	    return (ArrayList<Researcher>) committeeMembers.stream().
+	    		filter(candidate -> article.getAuthor() == candidate || 
+						article.getAuthorUniversity() == candidate.getUniversity() ||
+						!candidate.getResearchTopics().contains(article.getResearchTopic()) ||
+						(article.isResearcherAllocated(candidate))
+	    		).collect(Collectors.toList());
 	}
 
 	public ArrayList<Researcher> sortReviewers(ArrayList<Researcher> researchCandidates) {
-		ArrayList<Researcher> sortedResearchers = new ArrayList<Researcher>();
-		Researcher researcherWithLeastArticles = researchCandidates.get(0);
-		
-		while (researchCandidates.size() > 0) {
-			for (Researcher researchCandidate : researchCandidates) {
-				int articlesAmount = researchCandidate.getAlocatedArticles().size();
-				
-				if (articlesAmount < researcherWithLeastArticles.getAlocatedArticles().size()) {
-					researcherWithLeastArticles = researchCandidate;
-					
-				} else if (articlesAmount == researcherWithLeastArticles.getAlocatedArticles().size()) {
-					if (researchCandidate.getID() < researcherWithLeastArticles.getID()) {
-						researcherWithLeastArticles = researchCandidate;
-					}
-				}
-			}
-			
-			sortedResearchers.add(researcherWithLeastArticles);
-			researchCandidates.remove(researcherWithLeastArticles);
-		}
-		
-		return sortedResearchers;
+		Comparator<Researcher> byAllocatedArticles = (r1, r2) -> Integer.compare(r1.
+				getAlocatedArticles().size(), r2.getAlocatedArticles().size());
+		Comparator<Researcher> byID = (r1, r2) -> Integer.compare(r1.getID(), r2.getID());
+
+	    return (ArrayList<Researcher>) researchCandidates.stream().
+	    		sorted(byAllocatedArticles.thenComparing(byID)).collect(Collectors.toList());
 	}
 
 	public Article allocateArticle(Article lowestIDSubmittedArticle, Researcher firstSortedResearcher) {

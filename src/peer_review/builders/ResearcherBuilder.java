@@ -16,13 +16,17 @@ public class ResearcherBuilder {
         researcher = new Researcher(1,
         		"researcher name",
         		new University("UFRGS"),
-				new ArrayList<>(Arrays.asList(new ResearchTopic("topic 1"), new ResearchTopic("topic 2"))),
-				new ArrayList<>(Arrays.asList())
+				new ArrayList<>(Arrays.asList(new ResearchTopic("topic 1"), new ResearchTopic("topic 2")))
         		);
     }
  
     public ResearcherBuilder name(String name) {
         researcher.setName(name);
+        return this;
+    }
+
+    public ResearcherBuilder id(int id) {
+        researcher.setId(id);
         return this;
     }
 
