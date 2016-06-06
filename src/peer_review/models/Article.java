@@ -1,13 +1,10 @@
 package peer_review.models;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.*;
 
 public class Article {
-
 	private int id;
 	private String title;
 	private Researcher author;
@@ -15,6 +12,17 @@ public class Article {
 	private Conference conference;
 	private ResearchTopic researchTopic;
 	private Map<Researcher, Float> grades;
+
+	public Article(int id, String title, Researcher author, List<Researcher> reviewers, Conference conference,
+			ResearchTopic researchTopic, Map<Researcher, Float> grades) {
+		this.id = id;
+		this.title = title;
+		this.author = author;
+		this.reviewers = reviewers;
+		this.conference = conference;
+		this.researchTopic = researchTopic;
+		this.grades = grades;
+	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -28,21 +36,22 @@ public class Article {
 		this.author = author;
 	}
 
-	public Article(int id, String title, Researcher author, List<Researcher> reviewers, Conference conference,
-			ResearchTopic researchTopic, Map<Researcher, Float> grades) {
-		this.id = id;
-		this.title = title;
-		this.author = author;
-		this.reviewers = reviewers;
-		this.conference = conference;
-		this.researchTopic = researchTopic;
-		this.grades = grades;
+	public void setGrade(Researcher researcher, float grade) {
+		grades.put(researcher, grade);
 	}
 
 	public University getAuthorUniversity() {
 		return author.getUniversity();
 	}
 	
+	public int getID() {
+		return id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
 	public Researcher getAuthor() {
 		return author;
 	}
@@ -55,32 +64,20 @@ public class Article {
 		return grades;
 	}
 
-	public Boolean isResearcherAllocated(Researcher researcher) {
-		return reviewers.contains(researcher);
+	public List<Researcher> getReviewers() {
+		return reviewers;
 	}
 
-	public int getID() {
-		return id;
-	}
-	
-	public String getTitle() {
-		return title;
+	public Boolean isResearcherAllocated(Researcher researcher) {
+		return reviewers.contains(researcher);
 	}
 
 	public int numberOfReviewers() {
 		return reviewers.size();
 	}
 	
-	public List<Researcher> getReviewers() {
-		return reviewers;
-	}
-
 	public void allocateReviewer(Researcher reviewer) {
 		reviewers.add(reviewer);
-	}
-
-	public void setGrade(Researcher researcher, float grade) {
-		grades.put(researcher, grade);
 	}
 
 	public float getGradeAverage() {
