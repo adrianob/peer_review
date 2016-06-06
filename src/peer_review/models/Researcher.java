@@ -48,6 +48,13 @@ public class Researcher {
 	public void allocateArticle(Article article) {
 		allocatedArticles.add(article);
 	}
+	
+	public boolean isEligibleToReview(Article article) {
+		return this == article.getAuthor() || 
+				article.getAuthorUniversity() == this.getUniversity() ||
+				!this.getResearchTopics().contains(article.getResearchTopic()) ||
+				article.isResearcherAllocated(this);
+	}
 
 	public String toStringSimple() {
 		return "ID:" + getID() + " Name:" + getName();

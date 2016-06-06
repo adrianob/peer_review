@@ -12,10 +12,6 @@ public class Conference {
 	private ArrayList<Researcher> committeeMembers;
 	private Researcher coordinator;
 
-	public void setCoordinator(Researcher coordinator) {
-		this.coordinator = coordinator;
-	}
-
 	public Conference(String initials, ArrayList<Researcher> committeeMembers, Researcher coordinator) {
 		this.initials = initials;
 		this.articlesSubmitted = new ArrayList<Article>();
@@ -24,8 +20,19 @@ public class Conference {
 		this.coordinator = coordinator;
 	}
 
+	public void setInitials(String initials) {
+		this.initials = initials;
+	}
+	public void setCoordinator(Researcher coordinator) {
+		this.coordinator = coordinator;
+	}
+
 	public void addCommitteeMember(Researcher member) {
 		committeeMembers.add(member);
+	}
+
+	public String getInitials() {
+		return this.initials;
 	}
 
 	public Article getLowestIDSubmittedArticle() {
@@ -34,16 +41,13 @@ public class Conference {
 
 	public ArrayList<Researcher> getCandidateReviewers(Article article) {
 	    return (ArrayList<Researcher>) committeeMembers.stream().
-	    		filter(candidate -> article.getAuthor() == candidate || 
-						article.getAuthorUniversity() == candidate.getUniversity() ||
-						!candidate.getResearchTopics().contains(article.getResearchTopic()) ||
-						(article.isResearcherAllocated(candidate))
-	    		).collect(Collectors.toList());
+	    		filter(candidate -> candidate.isEligibleToReview(article)).
+	    		collect(Collectors.toList());
 	}
 
 	public ArrayList<Researcher> sortReviewers(ArrayList<Researcher> researchCandidates) {
-		Comparator<Researcher> byAllocatedArticles = (r1, r2) -> Integer.compare(r1.
-				getAlocatedArticles().size(), r2.getAlocatedArticles().size());
+		Comparator<Researcher> byAllocatedArticles = (r1, r2) -> Integer.compare(
+				r1.getAlocatedArticles().size(), r2.getAlocatedArticles().size());
 		Comparator<Researcher> byID = (r1, r2) -> Integer.compare(r1.getID(), r2.getID());
 
 	    return (ArrayList<Researcher>) researchCandidates.stream().
@@ -55,14 +59,6 @@ public class Conference {
 		firstSortedResearcher.allocateArticle(lowestIDSubmittedArticle);
 		articlesSubmitted.add(lowestIDSubmittedArticle);
 		return lowestIDSubmittedArticle;
-	}
-
-	public String getInitials() {
-		return this.initials;
-	}
-
-	public void setInitials(String initials) {
-		this.initials = initials;
 	}
 
 	private ArrayList<Article> getFilteredArticles(DoublePredicate predicate) {
