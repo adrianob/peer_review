@@ -50,10 +50,10 @@ public class Researcher {
 	}
 	
 	public boolean isEligibleToReview(Article article) {
-		return this == article.getAuthor() || 
+		return !(this == article.getAuthor() || 
 				article.getAuthorUniversity() == this.getUniversity() ||
 				!this.getResearchTopics().contains(article.getResearchTopic()) ||
-				article.isResearcherAllocated(this);
+				article.isResearcherAllocated(this));
 	}
 
 	public String toStringSimple() {
