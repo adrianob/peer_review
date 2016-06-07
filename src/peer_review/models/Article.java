@@ -68,7 +68,7 @@ public class Article {
 		return reviewers;
 	}
 
-	public Boolean isResearcherAllocated(Researcher researcher) {
+	public boolean isResearcherAllocated(Researcher researcher) {
 		return reviewers.contains(researcher);
 	}
 
