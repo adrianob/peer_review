@@ -41,4 +41,8 @@ public class Service {
 	public Collection<Article> getArticles() {
 		return db.getArticles();
 	}
+	
+	public Collection<Conference> getConferences() {
+		return db.getConferences();
+	}
 }

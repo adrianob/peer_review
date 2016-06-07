@@ -84,6 +84,10 @@ public class Conference {
 	public Researcher getCoordinator() {
 		return coordinator;
 	}
+	
+	public int getSubmittedArticlesLenght() {
+		return articlesSubmitted.size();
+	}
 
 	public boolean hasUnreviewedArticles() {
 		for (Article submittedArticle : articlesSubmitted) {
