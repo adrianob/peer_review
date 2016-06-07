@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import peer_review.models.Article;
+import peer_review.models.Conference;
 import peer_review.models.Review;
 import peer_review.models.Researcher;
 
@@ -24,6 +25,16 @@ public class ArticleBuilder {
         		);
     }
  
+    public ArticleBuilder(Conference conference) {
+        article = new Article(1,
+        		"article title",
+				new ResearcherBuilder().name("author").build(),
+				conference,
+				new ResearchTopic("topic 1"),
+				new ArrayList<Review>()
+        		);
+    }
+
     public ArticleBuilder id(int id) {
         article.setId(id);
         return this;
