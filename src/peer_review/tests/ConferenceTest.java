@@ -9,7 +9,9 @@ import org.junit.Test;
 
 import peer_review.models.Article;
 import peer_review.models.Conference;
+import peer_review.models.ResearchTopic;
 import peer_review.models.Researcher;
+import peer_review.models.University;
 import peer_review.builders.*;
 
 public class ConferenceTest {
@@ -36,6 +38,32 @@ public class ConferenceTest {
 		assertEquals(conference.sortReviewers(new 
 				ArrayList<Researcher>(Arrays.asList(researcher1, researcher2, researcher3, researcher4))), 
 				expectedOrder);		
+	}
+	
+	@Test
+	public void testgetCandidateReviewers() {
+		Researcher author = new ResearcherBuilder().build();
+		
+		author.setUniversity(new University("UFRGS"));
+		Researcher revisor = new ResearcherBuilder().build();
+		revisor.setUniversity(new University("Uniasselvi"));
+		Conference conference = new ConferenceBuilder().initials("foo").committeeMember(revisor).build();
+		
+		Article article1 = new ArticleBuilder()
+			.id(1)
+			 .author(author)
+			  .build();
+		
+		assertTrue(revisor.isEligibleToReview(article1));
+		assertFalse(author.isEligibleToReview(article1));
+		ArrayList<Researcher> r = new ArrayList<Researcher>();
+		
+		r.add(revisor);
+		assertEquals(conference.getCandidateReviewers(article1), r);
+		
+		r.clear();
+		r.add(author);
+		assertNotEquals(conference.getCandidateReviewers(article1), r);
 	}
 
 	@Test

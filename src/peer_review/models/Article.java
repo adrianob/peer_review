@@ -80,7 +80,7 @@ public class Article {
 	}
 
 	public List<Researcher> getReviewers() {
-		return reviewers();
+		return getReviewers();
 	}
 
 	public Boolean isResearcherAllocated(Researcher researcher) {
