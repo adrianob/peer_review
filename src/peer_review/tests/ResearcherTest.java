@@ -48,6 +48,7 @@ public class ResearcherTest {
 	}
 
 	@Test
+	public void testGetAlocatedArticles() {
 		assertTrue(1 == researcher.getAlocatedArticles().get(0).getID());
 	}
 	
