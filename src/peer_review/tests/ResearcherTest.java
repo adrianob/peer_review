@@ -1,32 +1,33 @@
 package peer_review.tests;
 
 import static org.junit.Assert.*;
+
+
 import org.junit.Before;
 import org.junit.Test;
 
 import peer_review.builders.ArticleBuilder;
-//import peer_review.models.Article;
+import peer_review.models.Article;
 import peer_review.builders.ResearcherBuilder;
 import peer_review.models.Researcher;
 
 public class ResearcherTest {
 	Researcher researcher;
-	//Article article;
+	Article article;
 
 	@Before
 	public void setUp() throws Exception {
 		researcher = new ResearcherBuilder().name("name 1").build();
 		System.out.print(researcher.toString());
-		//article = new ArticleBuilder().id(1).title("title").build();
-		//System.out.print(article.toString());
+		article = new ArticleBuilder().id(1).title("title").build();
+		System.out.print(article.toString());
+		researcher.allocateArticle(article);
 	}
 
 	@Test
 	public void testGetResearchTopics() {
-		for (int i = 0; i < researcher.getResearchTopics().size(); i++) {
-			int x = i + 1;
-			assertTrue("topic " + x == researcher.getResearchTopics().get(i).getName());	
-		}
+		assertTrue("topic 1" == researcher.getResearchTopics().get(0).getName());
+		assertTrue("topic 2" == researcher.getResearchTopics().get(1).getName());
 
 	}
 
@@ -47,8 +48,11 @@ public class ResearcherTest {
 	}
 
 	@Test
-	public void testAllocateArticle() {
-		//assertTrue(researcher.allocateArticle(article));
-
+		assertTrue(1 == researcher.getAlocatedArticles().get(0).getID());
+	}
+	
+	@Test
+	public void testIsEligibleToReview() {
+		assertFalse(researcher.isEligibleToReview(article));
 	}
 }
