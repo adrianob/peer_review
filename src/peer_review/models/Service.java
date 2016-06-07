@@ -19,7 +19,7 @@ public class Service {
 	}
 
 	public void rateArticle(Article article, Researcher reviewer, float rate) {
-		article.setGrade(reviewer, Optional.ofNullable(rate));
+		article.rate(reviewer, Optional.ofNullable(rate));
 	}
 
 	public Conference readConference(String initials) {

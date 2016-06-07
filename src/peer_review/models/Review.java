@@ -2,11 +2,11 @@ package peer_review.models;
 
 import java.util.Optional;
 
-public class Grade {
+public class Review {
 	private Researcher reviewer;
 	private Optional<Float> grade;
 	
-	public Grade(Researcher reviewer, Optional<Float> grade) {
+	public Review(Researcher reviewer, Optional<Float> grade) {
 		this.setReviewer(reviewer);
 		this.setGrade(grade);
 	}
