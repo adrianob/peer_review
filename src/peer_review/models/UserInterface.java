@@ -38,6 +38,29 @@ public class UserInterface {
 		}
 	}
 
+	//@TODO merge with selectConference
+	public Conference readConference() {
+		showMessage("Digite o nome de uma das conferencias");
+		for (Conference conference : service.getConferences()) {
+			showMessage(conference.toStringSimple());
+		}
+
+		while (true) {
+			String selected = readString();
+			for (Conference conference : service.getConferences()) {
+				if (selected.equals(conference.getInitials())) {
+					return conference;
+				}
+			}
+			showMessage("Conferencia inválida, tente de novo");
+		}
+	}
+	
+	public int readNumberOfRevewers(int min, int max) {
+		showMessage("Digite a quantidade de revisores, entre " + min + " e " + max);
+		return readInteger(min, max);
+	}
+
 	public int readInteger() {
 		return readInteger(0, 0, false);
 	}

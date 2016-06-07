@@ -61,7 +61,9 @@ public class Conference {
 	public Article allocateArticle(Article lowestIDSubmittedArticle, Researcher firstSortedResearcher) {
 		lowestIDSubmittedArticle.allocateReviewer(firstSortedResearcher);
 		firstSortedResearcher.allocateArticle(lowestIDSubmittedArticle);
-		articlesSubmitted.add(lowestIDSubmittedArticle);
+		assert(articlesSubmitted.contains(lowestIDSubmittedArticle));
+		articlesSubmitted.remove(lowestIDSubmittedArticle);
+		articlesAllocated.add(lowestIDSubmittedArticle);
 		return lowestIDSubmittedArticle;
 	}
 
@@ -80,7 +82,10 @@ public class Conference {
 	    return getFilteredArticles((grade) -> grade < 0);
 	}
 
-	//@TODO refactor 
+	public int getSubmittedArticlesLenght() {
+		return articlesSubmitted.size();
+	}
+
 	public boolean hasUnreviewedArticles() {
 		if (articlesSubmitted.size() > 0) {
 			return true;
