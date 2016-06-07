@@ -1,5 +1,6 @@
 package peer_review.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,21 +8,27 @@ public class Article {
 	private int id;
 	private String title;
 	private Researcher author;
-	private List<Researcher> reviewers;
 	private Conference conference;
 	private ResearchTopic researchTopic;
-	private List<Grade> grades;
+	private List<Review> reviews;
 
-	public Article(int id, String title, Researcher author, List<Researcher> reviewers, Conference conference,
-			ResearchTopic researchTopic, List<Grade> grades) {
+	public Article(int id, String title, Researcher author, Conference conference,
+			ResearchTopic researchTopic, List<Review> reviews) {
 		this.id = id;
 		this.title = title;
 		this.author = author;
-		this.reviewers = reviewers;
 		this.conference = conference;
 		this.researchTopic = researchTopic;
-		this.grades = grades;
+		this.reviews = reviews;
 		conference.addArticlesSubmitted(this);
+	}
+
+	public List<Researcher> reviewers() {
+		List<Researcher> reviewers = new ArrayList<>();
+		for (Review review : reviews) {
+			reviewers.add(review.getReviewer());
+		}
+		return reviewers;
 	}
 
 	public void setId(int id) {
@@ -36,9 +43,16 @@ public class Article {
 		this.author = author;
 	}
 
-	public void setGrade(Researcher researcher, Optional<Float> grade) {
-		grades.add(new Grade(researcher, grade));
-		conference.addArticlesAllocatted(this);
+	public void rate(Researcher researcher, Optional<Float> score) {
+		for (Review review : reviews) {
+			if (review.getReviewer() == researcher) {
+				review.setGrade(score);
+			}
+		}
+	}
+
+	public void addReview(Researcher researcher, Optional<Float> grade) {
+		reviews.add(new Review(researcher, grade));
 	}
 
 	public University getAuthorUniversity() {
@@ -61,28 +75,24 @@ public class Article {
 		return researchTopic;
 	}
 	
-	public List<Grade> getGrades() {
-		return grades;
+	public List<Review> getGrades() {
+		return reviews;
 	}
 
 	public List<Researcher> getReviewers() {
-		return reviewers;
+		return reviewers();
 	}
 
 	public Boolean isResearcherAllocated(Researcher researcher) {
-		return reviewers.contains(researcher);
+		return reviewers().contains(researcher);
 	}
 
 	public int numberOfReviewers() {
-		return reviewers.size();
+		return reviewers().size();
 	}
 	
-	public void allocateReviewer(Researcher reviewer) {
-		reviewers.add(reviewer);
-	}
-
 	public float getGradeAverage() {
-		return (float) grades.stream().
+		return (float) reviews.stream().
 				mapToDouble((grade) -> grade.getGrade().get()).average().getAsDouble();
 	}
 
@@ -95,7 +105,7 @@ public class Article {
 		String result = toStringSimple() + "\n";
 		result += "Author:\n" + author.toStringSimple() + "\n";
 		result += "Reviewers:\n";
-		for (Researcher reviewer : reviewers) {
+		for (Researcher reviewer : reviewers()) {
 			result += reviewer.toStringSimple() + "\n";
 		}
 

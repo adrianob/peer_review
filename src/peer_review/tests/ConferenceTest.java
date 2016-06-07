@@ -47,12 +47,9 @@ public class ConferenceTest {
 	@Test
 	public void testgetLowestIDSubmittedArticle() {
 		Conference conference = new ConferenceBuilder().build();
-		Article article1 = new ArticleBuilder().id(1).build();
-		Article article2 = new ArticleBuilder().id(2).build();
-		Article article3 = new ArticleBuilder().id(3).build();
-		conference.allocateArticle(article2, new ResearcherBuilder().build());
-		conference.allocateArticle(article1, new ResearcherBuilder().build());
-		conference.allocateArticle(article3, new ResearcherBuilder().build());
+		Article article1 = new ArticleBuilder(conference).id(1).build();
+		new ArticleBuilder(conference).id(2).build();
+		new ArticleBuilder(conference).id(3).build();
 
 		assertEquals(conference.getLowestIDSubmittedArticle(), article1);		
 	}
@@ -60,17 +57,9 @@ public class ConferenceTest {
 	@Test
 	public void testgetAcceptedArticles() {
 		Conference conference = new ConferenceBuilder().build();
-		conference.allocateArticle(new ArticleBuilder().
-				grade(new ResearcherBuilder().build(), 3.0f).build(),
-				new ResearcherBuilder().build());
-
-		conference.allocateArticle(new ArticleBuilder().
-				grade(new ResearcherBuilder().build(), 0.0f).build(),
-				new ResearcherBuilder().build());
-
-		conference.allocateArticle(new ArticleBuilder().
-				grade(new ResearcherBuilder().build(), -1.0f).build(),
-				new ResearcherBuilder().build());
+		new ArticleBuilder(conference).grade(new ResearcherBuilder().build(), 3.0f).build();
+		new ArticleBuilder(conference).grade(new ResearcherBuilder().build(), 0.0f).build();
+		new ArticleBuilder(conference).grade(new ResearcherBuilder().build(), -1.0f).build();
 
 		assertEquals(conference.getAcceptedArticles().size(), 2);		
 		assertEquals(conference.getRejectedArticles().size(), 1);		
