@@ -11,35 +11,37 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import peer_review.builders.ArticleBuilder;
+import peer_review.builders.ResearcherBuilder;
 import peer_review.models.Researcher;
 
 public class ResearcherTest {
-	//Researcher researcher1(id,name,affiliation,researchTopic,allocatedArticles);
+	Researcher researcher;
 	
 	@Before
 	public void setUp() throws Exception {
-		//researcher1 = new Researcher();
-		
+		researcher = new ResearcherBuilder().name("name 1").build();
+		System.out.print(researcher.toString());
 	}
 	
 	@Test
 	public void testGetResearchTopics() {
-		//assertTrue(researchTopic == researcher1.getResearchTopics());
+	//	assertTrue(researcher.researchTopic == researcher.getResearchTopics());
 	}
-	
+	@Test
 	public void testGetUniversity() {
 		//assertTrue(affiliation == researcher1.getUniversity());
 		
 	}
-	
+	@Test
 	public void testGetName() {
 		//assertTrue(name == researcher1.getName());
 	}
-	
+	@Test
 	public void testGetID() {
-		//assertTrue(id == researcher1.getID());
+		assertTrue(researcher.getID() == 1);
 	}
-	
+	@Test
 	public void testAllocateArticle() {
 		
 	}
