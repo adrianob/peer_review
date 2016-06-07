@@ -24,6 +24,10 @@ public class Researcher {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public void setUniversity(University affiliation) {
+		this.affiliation = affiliation;
+	}
 
 	public ArrayList<ResearchTopic> getResearchTopics() {
 		return researchTopics;
