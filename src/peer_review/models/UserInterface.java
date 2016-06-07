@@ -38,6 +38,7 @@ public class UserInterface {
 		}
 	}
 
+	//@TODO merge with selectConference
 	public Conference readConference() {
 		showMessage("Digite o nome de uma das conferencias");
 		for (Conference conference : service.getConferences()) {
@@ -108,6 +109,12 @@ public class UserInterface {
 			showMessage(i + ":" + commands.get(i).getName());
 		}
 	}
+	
+	public Conference selectConference() {
+		showMessage("Selecione a conferência");
+		String initials = readString();
+		return service.readConference(initials.trim());
+	}
 
 	public void showArticlesList() {
 		for (Article article : service.getArticles()) {
@@ -122,13 +129,15 @@ public class UserInterface {
 	}
 
 	public void showConferences() {
-
+		for (Conference conference : service.getConferences()) {
+			System.out.println(conference.toStringSimple());
+		}
 	}
 
 	public void showArticlesWithGrades(ArrayList<Article> articlesList) {
 		for (Article article : articlesList) {
-			if (article.getGrades() != null)
-				System.out.println(article.getTitle());
+			if (article.getGrades().size() > 0)
+				System.out.println(article.getTitle() + " " + article.getGradeAverage());
 		}
 	}
 }

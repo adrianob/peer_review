@@ -1,8 +1,7 @@
 package peer_review.models;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Optional;
 
 public class Article {
 	private int id;
@@ -11,10 +10,10 @@ public class Article {
 	private List<Researcher> reviewers;
 	private Conference conference;
 	private ResearchTopic researchTopic;
-	private Map<Researcher, Float> grades;
+	private List<Grade> grades;
 
 	public Article(int id, String title, Researcher author, List<Researcher> reviewers, Conference conference,
-			ResearchTopic researchTopic, Map<Researcher, Float> grades) {
+			ResearchTopic researchTopic, List<Grade> grades) {
 		this.id = id;
 		this.title = title;
 		this.author = author;
@@ -22,6 +21,7 @@ public class Article {
 		this.conference = conference;
 		this.researchTopic = researchTopic;
 		this.grades = grades;
+		conference.addArticlesSubmitted(this);
 	}
 
 	public void setId(int id) {
@@ -36,8 +36,9 @@ public class Article {
 		this.author = author;
 	}
 
-	public void setGrade(Researcher researcher, float grade) {
-		grades.put(researcher, grade);
+	public void setGrade(Researcher researcher, Optional<Float> grade) {
+		grades.add(new Grade(researcher, grade));
+		conference.addArticlesAllocatted(this);
 	}
 
 	public University getAuthorUniversity() {
@@ -60,7 +61,7 @@ public class Article {
 		return researchTopic;
 	}
 	
-	public Map<Researcher, Float> getGrades() {
+	public List<Grade> getGrades() {
 		return grades;
 	}
 
@@ -81,7 +82,8 @@ public class Article {
 	}
 
 	public float getGradeAverage() {
-		return (float) grades.entrySet().stream().mapToDouble(Entry::getValue).average().getAsDouble();
+		return (float) grades.stream().
+				mapToDouble((grade) -> grade.getGrade().get()).average().getAsDouble();
 	}
 
 	public String toStringSimple() {

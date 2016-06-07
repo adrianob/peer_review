@@ -10,21 +10,25 @@ public class Conference {
 	private ArrayList<Article> articlesSubmitted;
 	private ArrayList<Article> articlesAllocated;
 	private ArrayList<Researcher> committeeMembers;
-	private Researcher coordinator;
 
-	public Conference(String initials, ArrayList<Researcher> committeeMembers, Researcher coordinator) {
+	public Conference(String initials, ArrayList<Researcher> committeeMembers) {
 		this.initials = initials;
 		this.articlesSubmitted = new ArrayList<Article>();
 		this.articlesAllocated = new ArrayList<Article>();
 		this.committeeMembers = committeeMembers;
-		this.coordinator = coordinator;
+	}
+
+	public void addArticlesSubmitted(Article articleSubmitted) {
+		this.articlesSubmitted.add(articleSubmitted);
+	}
+
+	public void addArticlesAllocatted(Article articleAllocated) {
+		this.articlesAllocated.add(articleAllocated);
+		this.articlesSubmitted.remove(articleAllocated);
 	}
 
 	public void setInitials(String initials) {
 		this.initials = initials;
-	}
-	public void setCoordinator(Researcher coordinator) {
-		this.coordinator = coordinator;
 	}
 
 	public void addCommitteeMember(Researcher member) {
@@ -64,11 +68,12 @@ public class Conference {
 	}
 
 	private ArrayList<Article> getFilteredArticles(DoublePredicate predicate) {
-	    return (ArrayList<Article>) articlesSubmitted.stream().
+	    return (ArrayList<Article>) articlesAllocated.stream().
 	    		filter(a -> predicate.test(a.getGradeAverage())).
 	    		collect(Collectors.toList());
 	}
 
+	//@TODO order by average grade
 	public ArrayList<Article> getAcceptedArticles() {
 	    return getFilteredArticles((grade) -> grade >= 0);
 	}
@@ -77,21 +82,22 @@ public class Conference {
 	    return getFilteredArticles((grade) -> grade < 0);
 	}
 
-	public Researcher getCoordinator() {
-		return coordinator;
-	}
-	
 	public int getSubmittedArticlesLenght() {
 		return articlesSubmitted.size();
 	}
 
 	public boolean hasUnreviewedArticles() {
-		for (Article submittedArticle : articlesSubmitted) {
-			if (!articlesAllocated.contains(submittedArticle)) {
-				return false;
+		if (articlesSubmitted.size() > 0) {
+			return true;
+		}
+		for (Article allocatedArticle : articlesAllocated) {
+			for (Grade grade : allocatedArticle.getGrades()) {
+				if (!grade.getGrade().isPresent()) {
+					return true;
+				}
 			}
 		}
-		return true;
+		return false;
 	}
 
 	public String toStringSimple() {
@@ -111,7 +117,6 @@ public class Conference {
 			result += member.toStringSimple() + "\n";
 		}
 
-		result += "Coordinator:\n" + coordinator.toStringSimple() + "\n";
 		return result;
 	}
 }

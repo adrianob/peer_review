@@ -1,8 +1,9 @@
 package peer_review.models;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
-import peer_review.data.*;
 import peer_review.data.*;
 
 public class Service {
@@ -18,16 +19,11 @@ public class Service {
 	}
 
 	public void rateArticle(Article article, Researcher reviewer, float rate) {
-		article.setGrade(reviewer, rate);
+		article.setGrade(reviewer, Optional.ofNullable(rate));
 	}
 
-	public void selectArticle(Conference conference, UserInterface ui) {
-		// TODO: Implement
-	}
-
-	public Conference readConference() {
-		// TODO: Implement
-		return null;
+	public Conference readConference(String initials) {
+		return db.getConferenceByInitials(initials);
 	}
 	
 	public Researcher readResearcher(int id) {
@@ -41,8 +37,20 @@ public class Service {
 	public Collection<Article> getArticles() {
 		return db.getArticles();
 	}
-	
+
+	public ArrayList<Article> getRejectedArticles(Conference conference) {
+		return conference.getRejectedArticles();
+	}
+
+	public ArrayList<Article> getAcceptedArticles(Conference conference) {
+		return conference.getAcceptedArticles();
+	}
+
 	public Collection<Conference> getConferences() {
 		return db.getConferences();
+	}
+	
+	public boolean hasUnreviewdArticles(Conference conference) {
+		return conference.hasUnreviewedArticles();
 	}
 }

@@ -4,9 +4,10 @@ import peer_review.models.ResearchTopic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Optional;
 
 import peer_review.models.Article;
+import peer_review.models.Grade;
 import peer_review.models.Researcher;
 
 public class ArticleBuilder {
@@ -20,7 +21,7 @@ public class ArticleBuilder {
 				new ArrayList<>(Arrays.asList(new ResearcherBuilder().name("name 1").build(), new ResearcherBuilder().name("name 2").build())),
 				new ConferenceBuilder().build(),
 				new ResearchTopic("topic 1"),
-				new HashMap<Researcher, Float>()
+				new ArrayList<Grade>()
         		);
     }
  
@@ -35,7 +36,7 @@ public class ArticleBuilder {
     }
 
     public ArticleBuilder grade(Researcher researcher, Float grade) {
-        article.setGrade(researcher, grade);
+        article.setGrade(researcher, Optional.ofNullable(grade));
         return this;
     }
 
