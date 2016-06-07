@@ -23,7 +23,9 @@ public class Conference {
 	}
 
 	public void addArticlesAllocatted(Article articleAllocated) {
-		this.articlesAllocated.add(articleAllocated);
+		if (!this.articlesAllocated.contains(articleAllocated)) {
+			this.articlesAllocated.add(articleAllocated);
+		}
 		this.articlesSubmitted.remove(articleAllocated);
 	}
 
@@ -86,12 +88,16 @@ public class Conference {
 		return articlesSubmitted.size();
 	}
 
+	public int getAllocatedArticlesLenght() {
+		return articlesAllocated.size();
+	}
+
 	public boolean hasUnreviewedArticles() {
 		if (articlesSubmitted.size() > 0) {
 			return true;
 		}
 		for (Article allocatedArticle : articlesAllocated) {
-			for (Grade grade : allocatedArticle.getGrades()) {
+			for (Review grade : allocatedArticle.getGrades()) {
 				if (!grade.getGrade().isPresent()) {
 					return true;
 				}

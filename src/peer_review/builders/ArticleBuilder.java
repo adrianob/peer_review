@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import peer_review.models.Article;
-import peer_review.models.Grade;
+import peer_review.models.Review;
 import peer_review.models.Researcher;
 
 public class ArticleBuilder {
@@ -21,7 +21,7 @@ public class ArticleBuilder {
 				new ArrayList<>(Arrays.asList(new ResearcherBuilder().name("name 1").build(), new ResearcherBuilder().name("name 2").build())),
 				new ConferenceBuilder().build(),
 				new ResearchTopic("topic 1"),
-				new ArrayList<Grade>()
+				new ArrayList<Review>()
         		);
     }
  
@@ -36,7 +36,7 @@ public class ArticleBuilder {
     }
 
     public ArticleBuilder grade(Researcher researcher, Float grade) {
-        article.setGrade(researcher, Optional.ofNullable(grade));
+        article.addReview(researcher, Optional.ofNullable(grade));
         return this;
     }
 

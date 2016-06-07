@@ -10,17 +10,17 @@ public class Article {
 	private List<Researcher> reviewers;
 	private Conference conference;
 	private ResearchTopic researchTopic;
-	private List<Grade> grades;
+	private List<Review> reviews;
 
 	public Article(int id, String title, Researcher author, List<Researcher> reviewers, Conference conference,
-			ResearchTopic researchTopic, List<Grade> grades) {
+			ResearchTopic researchTopic, List<Review> reviews) {
 		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.reviewers = reviewers;
 		this.conference = conference;
 		this.researchTopic = researchTopic;
-		this.grades = grades;
+		this.reviews = reviews;
 		conference.addArticlesSubmitted(this);
 	}
 
@@ -36,8 +36,16 @@ public class Article {
 		this.author = author;
 	}
 
-	public void setGrade(Researcher researcher, Optional<Float> grade) {
-		grades.add(new Grade(researcher, grade));
+	public void rate(Researcher researcher, Optional<Float> score) {
+		for (Review review : reviews) {
+			if (review.getReviewer() == researcher) {
+				review.setGrade(score);
+			}
+		}
+	}
+
+	public void addReview(Researcher researcher, Optional<Float> grade) {
+		reviews.add(new Review(researcher, grade));
 		conference.addArticlesAllocatted(this);
 	}
 
@@ -61,8 +69,8 @@ public class Article {
 		return researchTopic;
 	}
 	
-	public List<Grade> getGrades() {
-		return grades;
+	public List<Review> getGrades() {
+		return reviews;
 	}
 
 	public List<Researcher> getReviewers() {
@@ -82,7 +90,7 @@ public class Article {
 	}
 
 	public float getGradeAverage() {
-		return (float) grades.stream().
+		return (float) reviews.stream().
 				mapToDouble((grade) -> grade.getGrade().get()).average().getAsDouble();
 	}
 

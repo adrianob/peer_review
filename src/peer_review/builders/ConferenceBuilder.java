@@ -1,10 +1,8 @@
 package peer_review.builders;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import peer_review.models.Conference;
 import peer_review.models.Researcher;
-import peer_review.models.Article;
 
 public class ConferenceBuilder {
 	private Conference conference;
