@@ -2,6 +2,7 @@ package peer_review.tests;
 
 import static org.junit.Assert.*;
 
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +51,7 @@ public class ArticleTest {
 		assertTrue(Math.abs(gradedArticle.getGradeAverage() - 2.0f) < epsilon);
 
 		// Test adding another grade
-		gradedArticle.setGrade(new ResearcherBuilder().build(), 0);
+		gradedArticle.setGrade(new ResearcherBuilder().build(), Optional.of(0.0f));
 		assertTrue(Math.abs(gradedArticle.getGradeAverage() - 1.5f) < epsilon);
 	}
 

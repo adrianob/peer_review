@@ -11,14 +11,8 @@ public class ConferenceBuilder {
 	 
     public ConferenceBuilder() {
         conference = new Conference("initials",
-						new ArrayList<Researcher>(),
-						new ResearcherBuilder().name("coordinator").build()
+						new ArrayList<Researcher>()
         		);
-    }
- 
-    public ConferenceBuilder coordinator(Researcher coordinator) {
-        conference.setCoordinator(coordinator);
-        return this;
     }
  
     public ConferenceBuilder initials(String initials) {
