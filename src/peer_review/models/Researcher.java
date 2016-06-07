@@ -9,11 +9,11 @@ public class Researcher {
 	private ArrayList<ResearchTopic> researchTopics;
 	public ArrayList<Article> allocatedArticles;
 
-	public Researcher(int id, String name, University affiliation, ArrayList<ResearchTopic> researchTopic) {
+	public Researcher(int id, String name, University affiliation, ArrayList<ResearchTopic> researchTopics) {
 		this.id = id;
 		this.name = name;
 		this.affiliation = affiliation;
-		this.researchTopics = researchTopic;
+		this.researchTopics = researchTopics;
 		this.allocatedArticles = new ArrayList<Article>();
 	}
 

@@ -83,8 +83,13 @@ public class Article {
 		return reviewers();
 	}
 
+<<<<<<< HEAD
 	public Boolean isResearcherAllocated(Researcher researcher) {
 		return reviewers().contains(researcher);
+=======
+	public boolean isResearcherAllocated(Researcher researcher) {
+		return reviewers.contains(researcher);
+>>>>>>> 9773ade6402aa05ddc8c9334375e7addfbf6e998
 	}
 
 	public int numberOfReviewers() {
