@@ -1,46 +1,58 @@
 package peer_review.tests;
 
-/*
- * 	private int id;
-	private String name;
-	private University affiliation;
-	private arrayList<ResearchTopic> researchTopic;
-	public arrayList<Article> allocatedArticles;
- */
 import static org.junit.Assert.*;
+
+
 import org.junit.Before;
 import org.junit.Test;
 
+import peer_review.builders.ArticleBuilder;
+import peer_review.models.Article;
+import peer_review.builders.ResearcherBuilder;
 import peer_review.models.Researcher;
 
 public class ResearcherTest {
-	//Researcher researcher1(id,name,affiliation,researchTopic,allocatedArticles);
-	
+	Researcher researcher;
+	Article article;
+
 	@Before
 	public void setUp() throws Exception {
-		//researcher1 = new Researcher();
-		
+		researcher = new ResearcherBuilder().name("name 1").build();
+		System.out.print(researcher.toString());
+		article = new ArticleBuilder().id(1).title("title").build();
+		System.out.print(article.toString());
+		researcher.allocateArticle(article);
+	}
+
+	@Test
+	public void testGetResearchTopics() {
+		assertTrue("topic 1" == researcher.getResearchTopics().get(0).getName());
+		assertTrue("topic 2" == researcher.getResearchTopics().get(1).getName());
+
+	}
+
+	@Test
+	public void testGetUniversity() {
+		assertTrue(researcher.getUniversity().getName() == "UFRGS");
+
+	}
+
+	@Test
+	public void testGetName() {
+		assertTrue("name 1" == researcher.getName());
+	}
+
+	@Test
+	public void testGetID() {
+		assertTrue(researcher.getID() == 1);
+	}
+
+	@Test
+		assertTrue(1 == researcher.getAlocatedArticles().get(0).getID());
 	}
 	
 	@Test
-	public void testGetResearchTopics() {
-		//assertTrue(researchTopic == researcher1.getResearchTopics());
-	}
-	
-	public void testGetUniversity() {
-		//assertTrue(affiliation == researcher1.getUniversity());
-		
-	}
-	
-	public void testGetName() {
-		//assertTrue(name == researcher1.getName());
-	}
-	
-	public void testGetID() {
-		//assertTrue(id == researcher1.getID());
-	}
-	
-	public void testAllocateArticle() {
-		
+	public void testIsEligibleToReview() {
+		assertFalse(researcher.isEligibleToReview(article));
 	}
 }
