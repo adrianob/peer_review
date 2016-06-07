@@ -132,51 +132,49 @@ public class Database {
 
 		//adding articles
 		Article article1 = new Article(1, "Coupling	and	Cohesion", researcher1, 
-				new ArrayList<Researcher>(Arrays.asList(researcher8, researcher10)), sbes, modularity, new ArrayList<Review>());
+				 sbes, modularity, new ArrayList<Review>());
 		article1.addReview(researcher8, Optional.of(2.0f));
 		article1.addReview(researcher10, Optional.ofNullable(null));
 		add(article1);
 		Article article2 = new Article(2, "Design Patterns", researcher6, 
-				new ArrayList<Researcher>(Arrays.asList(researcher7, researcher2)), fse, softwareReuse, new ArrayList<Review>());
+				 fse, softwareReuse, new ArrayList<Review>());
 		article2.addReview(researcher7, Optional.of(2.0f));
 		article2.addReview(researcher2, Optional.of(3.0f));
-		System.out.println(fse.getSubmittedArticlesLenght() );
-		System.out.println(fse.getAllocatedArticlesLenght() );
 		add(article2);
 		Article article3 = new Article(3, "AspectJ", researcher7, 
-				new ArrayList<Researcher>(Arrays.asList(researcher4, researcher6)), fse, aspectOrientedProgramming, new ArrayList<Review>());
+				 fse, aspectOrientedProgramming, new ArrayList<Review>());
 		article3.addReview(researcher4, Optional.of(-1.0f));
 		article3.addReview(researcher6, Optional.of(1.0f));
 		add(article3);
 		Article article4 = new Article(4, "Feature Model", researcher8, 
-				new ArrayList<Researcher>(Arrays.asList(researcher1, researcher3)), fse, softwareProductLine, new ArrayList<Review>());
+				 fse, softwareProductLine, new ArrayList<Review>());
 		article4.addReview(researcher1, Optional.of(1.0f));
 		article4.addReview(researcher3, Optional.of(0.0f));
 		add(article4);
 		Article article5 = new Article(5, "Architecture	Recovery", researcher9, 
-				new ArrayList<Researcher>(Arrays.asList(researcher4, researcher5)), fse, softwareArchitecture, new ArrayList<Review>());
+				 fse, softwareArchitecture, new ArrayList<Review>());
 		article5.addReview(researcher4, Optional.of(-3.0f));
 		article5.addReview(researcher5, Optional.of(-3.0f));
 		add(article5);
 		Article article6 = new Article(6, "Funcional Testing", researcher10, 
-				new ArrayList<Researcher>(Arrays.asList(researcher3, researcher6)), fse, softwareTesting, new ArrayList<Review>());
+				 fse, softwareTesting, new ArrayList<Review>());
 		article6.addReview(researcher3, Optional.of(-1.0f));
 		article6.addReview(researcher6, Optional.of(0.0f));
 		add(article6);
 		Article article7 = new Article(7, "COTs", researcher6, 
-				new ArrayList<Researcher>(), icse, softwareReuse, new ArrayList<Review>());
+				icse, softwareReuse, new ArrayList<Review>());
 		add(article7);
 		Article article8 = new Article(8, "Pointcut", researcher7, 
-				new ArrayList<Researcher>(), icse, aspectOrientedProgramming, new ArrayList<Review>());
+				 icse, aspectOrientedProgramming, new ArrayList<Review>());
 		add(article8);
 		Article article9 = new Article(9, "Architecture	Comformance", researcher8, 
-				new ArrayList<Researcher>(), icse, softwareProductLine, new ArrayList<Review>());
+				 icse, softwareProductLine, new ArrayList<Review>());
 		add(article9);
 		Article article10 = new Article(10, "Design	Patterns", researcher9, 
-				new ArrayList<Researcher>(), icse, softwareArchitecture, new ArrayList<Review>());
+				 icse, softwareArchitecture, new ArrayList<Review>());
 		add(article10);
 		Article article11 = new Article(11, "Structural	Testing", researcher10, 
-				new ArrayList<Researcher>(), icse, softwareTesting, new ArrayList<Review>());
+				 icse, softwareTesting, new ArrayList<Review>());
 		add(article11);
 	}
 

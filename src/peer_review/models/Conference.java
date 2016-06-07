@@ -8,25 +8,16 @@ import java.util.stream.*;
 public class Conference {
 	private String initials;
 	private ArrayList<Article> articlesSubmitted;
-	private ArrayList<Article> articlesAllocated;
 	private ArrayList<Researcher> committeeMembers;
 
 	public Conference(String initials, ArrayList<Researcher> committeeMembers) {
 		this.initials = initials;
 		this.articlesSubmitted = new ArrayList<Article>();
-		this.articlesAllocated = new ArrayList<Article>();
 		this.committeeMembers = committeeMembers;
 	}
 
 	public void addArticlesSubmitted(Article articleSubmitted) {
 		this.articlesSubmitted.add(articleSubmitted);
-	}
-
-	public void addArticlesAllocatted(Article articleAllocated) {
-		if (!this.articlesAllocated.contains(articleAllocated)) {
-			this.articlesAllocated.add(articleAllocated);
-		}
-		this.articlesSubmitted.remove(articleAllocated);
 	}
 
 	public void setInitials(String initials) {
@@ -61,17 +52,24 @@ public class Conference {
 	}
 
 	public Article allocateArticle(Article lowestIDSubmittedArticle, Researcher firstSortedResearcher) {
-		lowestIDSubmittedArticle.allocateReviewer(firstSortedResearcher);
+		//@TODO should create review instead
+		//lowestIDSubmittedArticle.allocateReviewer(firstSortedResearcher);
 		firstSortedResearcher.allocateArticle(lowestIDSubmittedArticle);
 		assert(articlesSubmitted.contains(lowestIDSubmittedArticle));
 		articlesSubmitted.remove(lowestIDSubmittedArticle);
-		articlesAllocated.add(lowestIDSubmittedArticle);
+		articlesAllocated().add(lowestIDSubmittedArticle);
 		return lowestIDSubmittedArticle;
 	}
 
 	private ArrayList<Article> getFilteredArticles(DoublePredicate predicate) {
-	    return (ArrayList<Article>) articlesAllocated.stream().
+	    return (ArrayList<Article>) articlesAllocated().stream().
 	    		filter(a -> predicate.test(a.getGradeAverage())).
+	    		collect(Collectors.toList());
+	}
+
+	public ArrayList<Article> articlesAllocated() {
+	    return (ArrayList<Article>) articlesSubmitted.stream().
+	    		filter(a -> a.getReviewers().size() > 0).
 	    		collect(Collectors.toList());
 	}
 
@@ -88,15 +86,11 @@ public class Conference {
 		return articlesSubmitted.size();
 	}
 
-	public int getAllocatedArticlesLenght() {
-		return articlesAllocated.size();
-	}
-
 	public boolean hasUnreviewedArticles() {
-		if (articlesSubmitted.size() > 0) {
+		if(articlesSubmitted.size() != articlesAllocated().size()) {
 			return true;
 		}
-		for (Article allocatedArticle : articlesAllocated) {
+		for (Article allocatedArticle : articlesAllocated()) {
 			for (Review grade : allocatedArticle.getGrades()) {
 				if (!grade.getGrade().isPresent()) {
 					return true;

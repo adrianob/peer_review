@@ -18,7 +18,6 @@ public class ArticleBuilder {
         article = new Article(1,
         		"article title",
 				new ResearcherBuilder().name("author").build(),
-				new ArrayList<>(Arrays.asList(new ResearcherBuilder().name("name 1").build(), new ResearcherBuilder().name("name 2").build())),
 				new ConferenceBuilder().build(),
 				new ResearchTopic("topic 1"),
 				new ArrayList<Review>()
