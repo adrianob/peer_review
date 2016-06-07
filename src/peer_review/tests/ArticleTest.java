@@ -2,6 +2,8 @@ package peer_review.tests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -9,6 +11,7 @@ import org.junit.Test;
 
 import peer_review.builders.*;
 import peer_review.models.Article;
+import peer_review.models.Researcher;
 
 public class ArticleTest {
 	Article article;
@@ -16,7 +19,16 @@ public class ArticleTest {
 	@Before
 	public void setUp() throws Exception {
 		article = new ArticleBuilder().id(1).title("title").build();
-		System.out.print(article.toString());
+	}
+
+	@Test
+	public void testreviewers() {
+		Researcher reviewer1 = new ResearcherBuilder().id(1).build();
+		Researcher reviewer2 = new ResearcherBuilder().id(2).build();
+		article.addReview(reviewer1, Optional.of(0.0f));
+		article.addReview(reviewer2, Optional.of(0.0f));
+
+		assertTrue(article.reviewers().size() == 2);
 	}
 
 	@Test
