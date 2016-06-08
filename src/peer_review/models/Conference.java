@@ -52,13 +52,10 @@ public class Conference {
 	}
 
 	public Article allocateArticle(Article lowestIDSubmittedArticle, Researcher firstSortedResearcher) {
-		//@TODO should create review instead
-		//lowestIDSubmittedArticle.allocateReviewer(firstSortedResearcher);
-		firstSortedResearcher.allocateArticle(lowestIDSubmittedArticle);
 		assert(articlesSubmitted.contains(lowestIDSubmittedArticle));
-		assert(committeeMembers.contains(lowestIDSubmittedArticle));
-		//articlesSubmitted.remove(lowestIDSubmittedArticle);
-		//articlesAllocated().add(lowestIDSubmittedArticle);
+		assert(committeeMembers.contains(firstSortedResearcher));
+		lowestIDSubmittedArticle.addReview(firstSortedResearcher, null);
+		firstSortedResearcher.allocateArticle(lowestIDSubmittedArticle);
 		return lowestIDSubmittedArticle;
 	}
 
