@@ -9,7 +9,7 @@ public class AllocateArticleToMemberCommand extends Command {
 
 	public void execute() {
 		Conference conferenceSelected = ui.readConference();
-		int numberOfReviewers = ui.readNumberOfRevewers(MIN_REVIEWERS, MAX_REVIEWERS);
+		int numberOfReviewers = ui.readNumberOfReviewers(MIN_REVIEWERS, MAX_REVIEWERS);
 		ui.showMessage("Iniciando alocação");
 		while (conferenceSelected.hasUnreviewedArticles()) {
 			Article lowest = conferenceSelected.getLowestIDSubmittedArticle();
