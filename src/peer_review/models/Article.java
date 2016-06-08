@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Article {
+	public static final float MAX_GRADE = 3.0f;
+	public static final float MIN_GRADE = -3.0f;
 	private int id;
 	private String title;
 	private Researcher author;

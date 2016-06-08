@@ -37,6 +37,18 @@ public class UserInterface {
 			}
 		}
 	}
+	
+	public Researcher readReviewer() {
+		showMessage("Selecione o id do revisor");
+		int reviewerID = readInteger();
+		return service.readResearcher(reviewerID);
+	}
+	
+	public Article readArticle() {
+		showMessage("Selecione o id do artigo");
+		int articleID = readInteger();
+		return service.readArticle(articleID);
+	}
 
 	//@TODO merge with selectConference
 	public Conference readConference() {
@@ -56,7 +68,12 @@ public class UserInterface {
 		}
 	}
 	
-	public int readNumberOfRevewers(int min, int max) {
+	public float readGrade(float min, float max) {
+		showMessage("Digite a nota, entre " + min + " e " + max);
+		return readFloat(min, max);
+	}
+
+	public int readNumberOfReviewers(int min, int max) {
 		showMessage("Digite a quantidade de revisores, entre " + min + " e " + max);
 		return readInteger(min, max);
 	}
