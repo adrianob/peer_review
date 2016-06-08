@@ -83,9 +83,23 @@ public class Conference {
 	public int getSubmittedArticlesLenght() {
 		return articlesSubmitted.size();
 	}
+	
+	public boolean areArticlesAllocated() {
+		return articlesSubmitted.size() == articlesAllocated().size();
+	}
+	
+	public Researcher allocateToCommittee(Article article) {
+		ArrayList<Researcher> possibleReviewers = getCandidateReviewers(article);
+		possibleReviewers = sortReviewers(possibleReviewers);
+		if (possibleReviewers.size() >= 1) {
+			allocateArticle(article, possibleReviewers.get(0));
+			return possibleReviewers.get(0);
+		}
+		return null;
+	}
 
 	public boolean hasUnreviewedArticles() {
-		if(articlesSubmitted.size() != articlesAllocated().size()) {
+		if(!areArticlesAllocated()) {
 			return true;
 		}
 		for (Article allocatedArticle : articlesAllocated()) {

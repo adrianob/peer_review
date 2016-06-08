@@ -11,13 +11,18 @@ public class AllocateArticleToMemberCommand extends Command {
 		Conference conferenceSelected = ui.readConference();
 		int numberOfReviewers = ui.readNumberOfReviewers(MIN_REVIEWERS, MAX_REVIEWERS);
 		ui.showMessage("Iniciando alocação");
-		while (conferenceSelected.hasUnreviewedArticles()) {
+		while (!conferenceSelected.areArticlesAllocated()) {
 			Article lowest = conferenceSelected.getLowestIDSubmittedArticle();
 			for (int i = 0; i < numberOfReviewers; i++) {
-				ArrayList<Researcher> possibleReviewers = conferenceSelected.getCandidateReviewers(lowest);
-				possibleReviewers = conferenceSelected.sortReviewers(possibleReviewers);
-				conferenceSelected.allocateArticle(lowest, possibleReviewers.get(0));
-				ui.showMessage("Artigo " + lowest.toStringSimple() + " alocado para o(a) pesquisador(a) " + possibleReviewers.get(0).toStringSimple());
+				Researcher allocated = conferenceSelected.allocateToCommittee(lowest);
+				if (allocated != null) {
+					ui.showMessage("Artigo " + lowest.toStringSimple() + " alocado para o(a) pesquisador(a) " + allocated.toStringSimple());
+				}
+				else
+				{
+					ui.showMessage("Não foi encontrado outro(a) membro do comite que possa realizar a revisão desse artigo");
+					break;
+				}
 			}
 		}
 		ui.showMessage("Fim da alocação");
