@@ -11,18 +11,18 @@ public class AllocateArticleToMemberCommand extends Command {
 		Conference conferenceSelected = ui.readConference();
 		int numberOfReviewers = ui.readNumberOfRevewers(MIN_REVIEWERS, MAX_REVIEWERS);
 
-		ui.showMessage("Iniciando alocação");
-		//ui.showMessage(conferenceSelected.getSubmittedArticlesLenght()+"");
+		ui.showMessage("Iniciando alocaï¿½ï¿½o");
 		while (conferenceSelected.getSubmittedArticlesLenght() > 0) {
 			Article lowest = conferenceSelected.getLowestIDSubmittedArticle();
 			while (lowest.getReviewers().size() < numberOfReviewers) {
-				ArrayList<Researcher> a = conferenceSelected.getCandidateReviewers(lowest);
-				a = conferenceSelected.sortReviewers(a);
-				conferenceSelected.allocateArticle(lowest, a.get(0));
-				ui.showMessage("Artigo " + lowest.toStringSimple() + " alocado para pesquisador" + a.get(0));
+				ArrayList<Researcher> possibleReviewers = conferenceSelected.getCandidateReviewers(lowest);
+				possibleReviewers = conferenceSelected.sortReviewers(possibleReviewers);
+				conferenceSelected.allocateArticle(lowest, possibleReviewers.get(0));
+				numberOfReviewers = numberOfReviewers - 1;
+				ui.showMessage("Artigo " + lowest.toStringSimple() + " alocado para o(a) pesquisador(a) " + possibleReviewers.get(0).toStringSimple());
 			}
 		}
-		ui.showMessage("Fim da alocação");
+		ui.showMessage("Fim da alocaï¿½ï¿½o");
 	}
 
 	@Override

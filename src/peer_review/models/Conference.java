@@ -56,6 +56,7 @@ public class Conference {
 		//lowestIDSubmittedArticle.allocateReviewer(firstSortedResearcher);
 		firstSortedResearcher.allocateArticle(lowestIDSubmittedArticle);
 		assert(articlesSubmitted.contains(lowestIDSubmittedArticle));
+		assert(committeeMembers.contains(lowestIDSubmittedArticle));
 		//articlesSubmitted.remove(lowestIDSubmittedArticle);
 		//articlesAllocated().add(lowestIDSubmittedArticle);
 		return lowestIDSubmittedArticle;
