@@ -31,7 +31,7 @@ public class UserInterface {
 			try {
 				String s = scan.nextLine();
 				// scan.close();
-				return s;
+				return s.trim();
 			} catch (Exception e) {
 				showMessage("Digite uma string!");
 			}
@@ -50,22 +50,23 @@ public class UserInterface {
 		return service.readArticle(articleID);
 	}
 
-	//@TODO merge with selectConference
 	public Conference readConference() {
-		showMessage("Digite o nome de uma das conferencias");
+		showMessage("Digite o nome da conferência");
 		for (Conference conference : service.getConferences()) {
 			showMessage(conference.toStringSimple());
 		}
 
 		while (true) {
-			String selected = readString();
-			for (Conference conference : service.getConferences()) {
-				if (selected.equals(conference.getInitials())) {
-					return conference;
-				}
+			String conferenceInitials = readString();
+			Conference conference = service.readConference(conferenceInitials);
+			if (conference == null)
+			{
+				showMessage("Conferencia inválida, tente de novo");
 			}
-			showMessage("Conferencia inválida, tente de novo");
-		}
+			else {
+				return conference;
+			}
+		}	
 	}
 	
 	public float readGrade(float min, float max) {
@@ -125,12 +126,6 @@ public class UserInterface {
 		for (int i = 0; i < commands.size(); i++) {
 			showMessage(i + ":" + commands.get(i).getName());
 		}
-	}
-	
-	public Conference selectConference() {
-		showMessage("Selecione a conferência");
-		String initials = readString();
-		return service.readConference(initials.trim());
 	}
 
 	public void showArticlesList() {
