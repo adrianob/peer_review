@@ -19,7 +19,7 @@ public class RateArticleCommand extends Command {
 
 	private void attributeGrade(Article chosenArticle) {
 		Researcher researcher = ui.readReviewer();
-		float grade = ui.readGrade(-3, 3);
+		float grade = ui.readGrade(Article.MIN_GRADE, Article.MAX_GRADE);
 		ui.service.rateArticle(chosenArticle, researcher, grade);
 	}
 }
