@@ -69,7 +69,7 @@ public class Conference {
 
 	public ArrayList<Article> articlesAllocated() {
 	    return (ArrayList<Article>) articlesSubmitted.stream().
-	    		filter(a -> a.getReviewers().size() > 0).
+	    		filter(a -> a.numberOfReviewers() > 0).
 	    		collect(Collectors.toList());
 	}
 
@@ -91,12 +91,11 @@ public class Conference {
 			return true;
 		}
 		for (Article allocatedArticle : articlesAllocated()) {
-			for (Review grade : allocatedArticle.getGrades()) {
-				if (!grade.getGrade().isPresent()) {
-					return true;
-				}
+			if (allocatedArticle.getGrades().stream().anyMatch(grade -> !grade.getGrade().isPresent())) {
+				return true;
 			}
 		}
+
 		return false;
 	}
 

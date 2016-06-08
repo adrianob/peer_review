@@ -3,7 +3,6 @@ package peer_review.builders;
 import peer_review.models.ResearchTopic;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 import peer_review.models.Article;

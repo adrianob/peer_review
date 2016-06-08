@@ -1,8 +1,8 @@
 package peer_review.models;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Article {
 	private int id;
@@ -24,11 +24,7 @@ public class Article {
 	}
 
 	public List<Researcher> reviewers() {
-		List<Researcher> reviewers = new ArrayList<>();
-		for (Review review : reviews) {
-			reviewers.add(review.getReviewer());
-		}
-		return reviewers;
+		return this.reviews.stream().map(Review::getReviewer).collect(Collectors.toList());
 	}
 
 	public void setId(int id) {
@@ -44,11 +40,8 @@ public class Article {
 	}
 
 	public void rate(Researcher researcher, Optional<Float> score) {
-		for (Review review : reviews) {
-			if (review.getReviewer() == researcher) {
-				review.setGrade(score);
-			}
-		}
+		this.reviews.stream().filter(review -> review.getReviewer() == researcher).
+		forEach(review -> review.setGrade(score));
 	}
 
 	public void addReview(Researcher researcher, Optional<Float> grade) {
