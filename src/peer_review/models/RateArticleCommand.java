@@ -8,7 +8,6 @@ public class RateArticleCommand extends Command {
 	public void execute() {
 		ui.showArticlesList();
 		Article chosenArticle = ui.readArticle();
-		ui.showArticleReviewersList(chosenArticle);
 		attributeGrade(chosenArticle);
 	}
 
@@ -18,7 +17,7 @@ public class RateArticleCommand extends Command {
 	}
 
 	private void attributeGrade(Article chosenArticle) {
-		Researcher researcher = ui.readReviewer();
+		Researcher researcher = ui.readReviewer(chosenArticle.getReviewers());
 		float grade = ui.readGrade(Article.MIN_GRADE, Article.MAX_GRADE);
 		ui.service.rateArticle(chosenArticle, researcher, grade);
 	}

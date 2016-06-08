@@ -1,6 +1,7 @@
 package peer_review.models;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Map.Entry;
@@ -37,13 +38,24 @@ public class UserInterface {
 			}
 		}
 	}
-	
-	public Researcher readReviewer() {
+
+	public Researcher readReviewer(List<Researcher> reviewers) {
 		showMessage("Selecione o id do revisor");
-		int reviewerID = readInteger();
-		return service.readResearcher(reviewerID);
+		for (Researcher reviewer : reviewers) {
+			showMessage(reviewer.toStringSimple());
+		}
+		while (true) {
+			int reviewerID = readInteger();
+			boolean isIDvalid = reviewers.stream().anyMatch(a -> a.getID() == reviewerID);
+			if (!isIDvalid) {
+				showMessage("ID inválido, tente de novo");
+			}
+			else {
+				return service.readResearcher(reviewerID);
+			}
+		}
 	}
-	
+
 	public Article readArticle() {
 		showMessage("Selecione o id do artigo");
 		int articleID = readInteger();
