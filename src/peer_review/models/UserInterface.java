@@ -49,8 +49,7 @@ public class UserInterface {
 			boolean isIDvalid = reviewers.stream().anyMatch(a -> a.getID() == reviewerID);
 			if (!isIDvalid) {
 				showMessage("ID inválido, tente de novo");
-			}
-			else {
+			} else {
 				return service.readResearcher(reviewerID);
 			}
 		}
@@ -58,8 +57,17 @@ public class UserInterface {
 
 	public Article readArticle() {
 		showMessage("Selecione o id do artigo");
-		int articleID = readInteger();
-		return service.readArticle(articleID);
+		showArticlesList();
+		while (true) {
+			int articleID = readInteger();
+			Article article = service.readArticle(articleID);
+			if (article == null) {
+				showMessage("ID inválido, tente de novo");
+			} else {
+				return article;
+			}
+		}
+
 	}
 
 	public Conference readConference() {
@@ -71,16 +79,14 @@ public class UserInterface {
 		while (true) {
 			String conferenceInitials = readString();
 			Conference conference = service.readConference(conferenceInitials);
-			if (conference == null)
-			{
+			if (conference == null) {
 				showMessage("Conferencia inválida, tente de novo");
-			}
-			else {
+			} else {
 				return conference;
 			}
-		}	
+		}
 	}
-	
+
 	public float readGrade(float min, float max) {
 		showMessage("Digite a nota, entre " + min + " e " + max);
 		return readFloat(min, max);

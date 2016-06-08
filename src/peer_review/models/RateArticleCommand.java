@@ -6,7 +6,6 @@ public class RateArticleCommand extends Command {
 	}
 
 	public void execute() {
-		ui.showArticlesList();
 		Article chosenArticle = ui.readArticle();
 		attributeGrade(chosenArticle);
 	}
