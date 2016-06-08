@@ -22,8 +22,6 @@ public class ResearchTopic {
 	
 	@Override
 	public boolean equals(Object o) {
-		if (((ResearchTopic) o).getName() == this.getName())
-			return true;
-		return false;
+		return ((ResearchTopic) o).getName() == this.getName();
 	}
 }

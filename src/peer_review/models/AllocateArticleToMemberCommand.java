@@ -9,9 +9,9 @@ public class AllocateArticleToMemberCommand extends Command {
 
 	public void execute() {
 		Conference conferenceSelected = ui.readConference();
-		int numberOfReviewers = ui.readNumberOfRevewers(MIN_REVIEWERS, MAX_REVIEWERS);
+		int numberOfReviewers = ui.readNumberOfReviewers(MIN_REVIEWERS, MAX_REVIEWERS);
 
-		ui.showMessage("Iniciando alocação");
+		ui.showMessage("Iniciando alocaï¿½ï¿½o");
 		//ui.showMessage(conferenceSelected.getSubmittedArticlesLenght()+"");
 		while (conferenceSelected.getSubmittedArticlesLenght() > 0) {
 			Article lowest = conferenceSelected.getLowestIDSubmittedArticle();
@@ -22,7 +22,7 @@ public class AllocateArticleToMemberCommand extends Command {
 				ui.showMessage("Artigo " + lowest.toStringSimple() + " alocado para pesquisador" + a.get(0));
 			}
 		}
-		ui.showMessage("Fim da alocação");
+		ui.showMessage("Fim da alocaï¿½ï¿½o");
 	}
 
 	@Override

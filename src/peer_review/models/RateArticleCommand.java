@@ -7,10 +7,7 @@ public class RateArticleCommand extends Command {
 
 	public void execute() {
 		ui.showArticlesList();
-		ui.showMessage("Selecione o id do artigo");
-		int articleID = ui.readInteger();
-		Article chosenArticle = ui.service.readArticle(articleID);
-		
+		Article chosenArticle = ui.readArticle();
 		ui.showArticleReviewersList(chosenArticle);
 		attributeGrade(chosenArticle);
 	}
@@ -21,13 +18,8 @@ public class RateArticleCommand extends Command {
 	}
 
 	private void attributeGrade(Article chosenArticle) {
-		ui.showMessage("Selecione o id do revisor");
-		int reviewerID = ui.readInteger();
-		Researcher researcher = ui.service.readResearcher(reviewerID);
-
-		ui.showMessage("Selecione uma nota entre -3.0 e 3.0");
-		float grade = ui.readFloat(-3, 3);
-
+		Researcher researcher = ui.readReviewer();
+		float grade = ui.readGrade(-3, 3);
 		ui.service.rateArticle(chosenArticle, researcher, grade);
 	}
 }
