@@ -9,11 +9,11 @@ public class Researcher {
 	private ArrayList<ResearchTopic> researchTopics;
 	public ArrayList<Article> allocatedArticles;
 
-	public Researcher(int id, String name, University affiliation, ArrayList<ResearchTopic> researchTopic) {
+	public Researcher(int id, String name, University affiliation, ArrayList<ResearchTopic> researchTopics) {
 		this.id = id;
 		this.name = name;
 		this.affiliation = affiliation;
-		this.researchTopics = researchTopic;
+		this.researchTopics = researchTopics;
 		this.allocatedArticles = new ArrayList<Article>();
 	}
 
@@ -23,6 +23,10 @@ public class Researcher {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void setUniversity(University affiliation) {
+		this.affiliation = affiliation;
 	}
 
 	public ArrayList<ResearchTopic> getResearchTopics() {
@@ -47,6 +51,13 @@ public class Researcher {
 
 	public void allocateArticle(Article article) {
 		allocatedArticles.add(article);
+	}
+	
+	public boolean isEligibleToReview(Article article) {
+		return !(this == article.getAuthor() || 
+				article.getAuthorUniversity() == this.getUniversity() ||
+				!this.getResearchTopics().contains(article.getResearchTopic()) ||
+				article.isResearcherAllocated(this));
 	}
 
 	public String toStringSimple() {

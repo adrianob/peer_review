@@ -1,30 +1,33 @@
-Mudanças feitas no projeto:
+Mudanï¿½as feitas no projeto:
 
 - Database:
-	- Métodos para adicionar no banco foram movidos para add(), usando overload
+	- Mï¿½todos para adicionar no banco foram movidos para add(), usando overload
 	- Usando Mapas no lugar de listas // TODO: Elaborar
 
 - Article:
-	- Adicionado método toString()
-	- Adicionado método toStringSimple(), que retorna informações simplificadas sobre o Article
-	- Adicionado método getGradeAverage(), usado para decidir se o artigo será aceito ou não em uma conferência, de acordo com a média de suas avaliações.
+	- Adicionado mï¿½todo toString()
+	- Adicionado mï¿½todo toStringSimple(), que retorna informaï¿½ï¿½es simplificadas sobre o Article
+	- Adicionado mï¿½todo getGradeAverage(), usado para decidir se o artigo serï¿½ aceito ou nï¿½o em uma conferï¿½ncia, de acordo com a mï¿½dia de suas avaliaï¿½ï¿½es.
+	- Removido reviewers, pode ser calculado a partir de reviews
 	
 - Researcher:
-	- Adicionado método toString()
-	- Adicionado método toStringSimple(), que retorna informações simplificadas sobre o Researcher
+	- Adicionado mï¿½todo toString()
+	- Adicionado mï¿½todo toStringSimple(), que retorna informaï¿½ï¿½es simplificadas sobre o Researcher
 	
 - Conference:
-	- Adicionado método toString()
-	- Adicionado método toStringSimple(), que retorna informações simplificadas sobre a Conference
+	- Adicionado mï¿½todo toString()
+	- Adicionado mï¿½todo toStringSimple(), que retorna informaï¿½ï¿½es simplificadas sobre a Conference
+	- Removido atributo coordinator
+	- Removido articlesAllocated, pode ser calculado a partir de reviews
 	
 - University:
-	- Adicionado método toString()
+	- Adicionado mï¿½todo toString()
 	
 - ResearchTopic:
-	- Adicionado método toString()
+	- Adicionado mï¿½todo toString()
 	
 	
 - Command:
-	- Adicionado método abstrato getName(), que deve retornar um nome legível do comando
+	- Adicionado mï¿½todo abstrato getName(), que deve retornar um nome legï¿½vel do comando
 	
 	

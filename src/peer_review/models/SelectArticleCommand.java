@@ -6,11 +6,23 @@ public class SelectArticleCommand extends Command {
 	}
 
 	public void execute() {
-		
+		ui.showConferences();
+		Conference conference = ui.selectConference();
+		if (ui.service.hasUnreviewdArticles(conference)) {
+			ui.showMessage("Notas pendentes");
+			return;
+		}
+		else {
+			ui.showMessage("Artigos aceitos:");
+			ui.showArticlesWithGrades(ui.service.getAcceptedArticles(conference));
+			ui.showMessage("Artigos rejeitados:");
+			ui.showArticlesWithGrades(ui.service.getRejectedArticles(conference));
+		}
+
 	}
 
 	@Override
 	public String getName() {
-		return "Sele��o de artigos";
+		return "Seleção de artigos";
 	}
 }

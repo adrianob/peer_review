@@ -3,10 +3,11 @@ package peer_review.builders;
 import peer_review.models.ResearchTopic;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Optional;
 
 import peer_review.models.Article;
+import peer_review.models.Conference;
+import peer_review.models.Review;
 import peer_review.models.Researcher;
 
 public class ArticleBuilder {
@@ -17,13 +18,22 @@ public class ArticleBuilder {
         article = new Article(1,
         		"article title",
 				new ResearcherBuilder().name("author").build(),
-				new ArrayList<>(Arrays.asList(new ResearcherBuilder().name("name 1").build(), new ResearcherBuilder().name("name 2").build())),
 				new ConferenceBuilder().build(),
 				new ResearchTopic("topic 1"),
-				new HashMap<Researcher, Float>()
+				new ArrayList<Review>()
         		);
     }
  
+    public ArticleBuilder(Conference conference) {
+        article = new Article(1,
+        		"article title",
+				new ResearcherBuilder().name("author").build(),
+				conference,
+				new ResearchTopic("topic 1"),
+				new ArrayList<Review>()
+        		);
+    }
+
     public ArticleBuilder id(int id) {
         article.setId(id);
         return this;
@@ -35,7 +45,7 @@ public class ArticleBuilder {
     }
 
     public ArticleBuilder grade(Researcher researcher, Float grade) {
-        article.setGrade(researcher, grade);
+        article.addReview(researcher, Optional.ofNullable(grade));
         return this;
     }
 
