@@ -33,7 +33,8 @@ public class Conference {
 	}
 
 	public Article getLowestIDSubmittedArticle() {
-		return articlesSubmitted.stream().min(Comparator.comparingInt(Article::getID)).get();
+		return articlesSubmitted.stream().filter(article -> !articlesAllocated().contains(article)).
+				min(Comparator.comparingInt(Article::getID)).get();
 	}
 
 	public ArrayList<Researcher> getCandidateReviewers(Article article) {

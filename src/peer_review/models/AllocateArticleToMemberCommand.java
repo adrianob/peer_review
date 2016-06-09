@@ -11,6 +11,7 @@ public class AllocateArticleToMemberCommand extends Command {
 		Conference conferenceSelected = ui.readConference();
 		int numberOfReviewers = ui.readNumberOfReviewers(MIN_REVIEWERS, MAX_REVIEWERS);
 		ui.showMessage("Iniciando alocação");
+		System.out.println(conferenceSelected.areArticlesAllocated());
 		while (!conferenceSelected.areArticlesAllocated()) {
 			Article lowest = conferenceSelected.getLowestIDSubmittedArticle();
 			for (int i = 0; i < numberOfReviewers; i++) {
