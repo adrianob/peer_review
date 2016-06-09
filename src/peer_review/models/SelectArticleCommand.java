@@ -6,8 +6,7 @@ public class SelectArticleCommand extends Command {
 	}
 
 	public void execute() {
-		ui.showConferences();
-		Conference conference = ui.selectConference();
+		Conference conference = ui.readConference();
 		if (ui.service.hasUnreviewdArticles(conference)) {
 			ui.showMessage("Notas pendentes");
 			return;

@@ -1,6 +1,7 @@
 package peer_review.models;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Map.Entry;
@@ -31,43 +32,61 @@ public class UserInterface {
 			try {
 				String s = scan.nextLine();
 				// scan.close();
-				return s;
+				return s.trim();
 			} catch (Exception e) {
 				showMessage("Digite uma string!");
 			}
 		}
 	}
-	
-	public Researcher readReviewer() {
+
+	public Researcher readReviewer(List<Researcher> reviewers) {
 		showMessage("Selecione o id do revisor");
-		int reviewerID = readInteger();
-		return service.readResearcher(reviewerID);
-	}
-	
-	public Article readArticle() {
-		showMessage("Selecione o id do artigo");
-		int articleID = readInteger();
-		return service.readArticle(articleID);
+		for (Researcher reviewer : reviewers) {
+			showMessage(reviewer.toStringSimple());
+		}
+		while (true) {
+			int reviewerID = readInteger();
+			boolean isIDvalid = reviewers.stream().anyMatch(a -> a.getID() == reviewerID);
+			if (!isIDvalid) {
+				showMessage("ID inválido, tente de novo");
+			} else {
+				return service.readResearcher(reviewerID);
+			}
+		}
 	}
 
-	//@TODO merge with selectConference
+	public Article readArticle() {
+		showMessage("Selecione o id do artigo");
+		showArticlesList();
+		while (true) {
+			int articleID = readInteger();
+			Article article = service.readArticle(articleID);
+			if (article == null) {
+				showMessage("ID inválido, tente de novo");
+			} else {
+				return article;
+			}
+		}
+
+	}
+
 	public Conference readConference() {
-		showMessage("Digite o nome de uma das conferencias");
+		showMessage("Digite o nome da conferência");
 		for (Conference conference : service.getConferences()) {
 			showMessage(conference.toStringSimple());
 		}
 
 		while (true) {
-			String selected = readString();
-			for (Conference conference : service.getConferences()) {
-				if (selected.equals(conference.getInitials())) {
-					return conference;
-				}
+			String conferenceInitials = readString();
+			Conference conference = service.readConference(conferenceInitials);
+			if (conference == null) {
+				showMessage("Conferencia inválida, tente de novo");
+			} else {
+				return conference;
 			}
-			showMessage("Conferencia inválida, tente de novo");
 		}
 	}
-	
+
 	public float readGrade(float min, float max) {
 		showMessage("Digite a nota, entre " + min + " e " + max);
 		return readFloat(min, max);
@@ -125,12 +144,6 @@ public class UserInterface {
 		for (int i = 0; i < commands.size(); i++) {
 			showMessage(i + ":" + commands.get(i).getName());
 		}
-	}
-	
-	public Conference selectConference() {
-		showMessage("Selecione a conferência");
-		String initials = readString();
-		return service.readConference(initials.trim());
 	}
 
 	public void showArticlesList() {

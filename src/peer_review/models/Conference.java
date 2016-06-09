@@ -52,12 +52,10 @@ public class Conference {
 	}
 
 	public Article allocateArticle(Article lowestIDSubmittedArticle, Researcher firstSortedResearcher) {
-		//@TODO should create review instead
-		//lowestIDSubmittedArticle.allocateReviewer(firstSortedResearcher);
-		firstSortedResearcher.allocateArticle(lowestIDSubmittedArticle);
 		assert(articlesSubmitted.contains(lowestIDSubmittedArticle));
-		//articlesSubmitted.remove(lowestIDSubmittedArticle);
-		//articlesAllocated().add(lowestIDSubmittedArticle);
+		assert(committeeMembers.contains(firstSortedResearcher));
+		lowestIDSubmittedArticle.addReview(firstSortedResearcher, null);
+		firstSortedResearcher.allocateArticle(lowestIDSubmittedArticle);
 		return lowestIDSubmittedArticle;
 	}
 
@@ -85,9 +83,23 @@ public class Conference {
 	public int getSubmittedArticlesLenght() {
 		return articlesSubmitted.size();
 	}
+	
+	public boolean areArticlesAllocated() {
+		return articlesSubmitted.size() == articlesAllocated().size();
+	}
+	
+	public Researcher allocateToCommittee(Article article) {
+		ArrayList<Researcher> possibleReviewers = getCandidateReviewers(article);
+		possibleReviewers = sortReviewers(possibleReviewers);
+		if (possibleReviewers.size() >= 1) {
+			allocateArticle(article, possibleReviewers.get(0));
+			return possibleReviewers.get(0);
+		}
+		return null;
+	}
 
 	public boolean hasUnreviewedArticles() {
-		if(articlesSubmitted.size() != articlesAllocated().size()) {
+		if(!areArticlesAllocated()) {
 			return true;
 		}
 		for (Article allocatedArticle : articlesAllocated()) {

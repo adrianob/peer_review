@@ -10,24 +10,27 @@ public class AllocateArticleToMemberCommand extends Command {
 	public void execute() {
 		Conference conferenceSelected = ui.readConference();
 		int numberOfReviewers = ui.readNumberOfReviewers(MIN_REVIEWERS, MAX_REVIEWERS);
-
-		ui.showMessage("Iniciando aloca��o");
-		//ui.showMessage(conferenceSelected.getSubmittedArticlesLenght()+"");
-		while (conferenceSelected.getSubmittedArticlesLenght() > 0) {
+		ui.showMessage("Iniciando alocação");
+		while (!conferenceSelected.areArticlesAllocated()) {
 			Article lowest = conferenceSelected.getLowestIDSubmittedArticle();
-			while (lowest.getReviewers().size() < numberOfReviewers) {
-				ArrayList<Researcher> a = conferenceSelected.getCandidateReviewers(lowest);
-				a = conferenceSelected.sortReviewers(a);
-				conferenceSelected.allocateArticle(lowest, a.get(0));
-				ui.showMessage("Artigo " + lowest.toStringSimple() + " alocado para pesquisador" + a.get(0));
+			for (int i = 0; i < numberOfReviewers; i++) {
+				Researcher allocated = conferenceSelected.allocateToCommittee(lowest);
+				if (allocated != null) {
+					ui.showMessage("Artigo " + lowest.toStringSimple() + " alocado para o(a) pesquisador(a) " + allocated.toStringSimple());
+				}
+				else
+				{
+					ui.showMessage("Não foi encontrado outro(a) membro do comite que possa realizar a revisão desse artigo");
+					break;
+				}
 			}
 		}
-		ui.showMessage("Fim da aloca��o");
+		ui.showMessage("Fim da alocação");
 	}
 
 	@Override
 	public String getName() {
-		return "Aloca��o de artigos a membros do comit� de programa";
+		return "Alocação de artigos a membros do comitê de programa";
 	}
 
 	private int MIN_REVIEWERS = 2;
