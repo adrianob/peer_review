@@ -1,10 +1,12 @@
 package peer_review.models;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Article {
+	public static final float MAX_GRADE = 3.0f;
+	public static final float MIN_GRADE = -3.0f;
 	private int id;
 	private String title;
 	private Researcher author;
@@ -21,14 +23,11 @@ public class Article {
 		this.researchTopic = researchTopic;
 		this.reviews = reviews;
 		conference.addArticlesSubmitted(this);
+		author.allocateArticle(this);
 	}
 
 	public List<Researcher> reviewers() {
-		List<Researcher> reviewers = new ArrayList<>();
-		for (Review review : reviews) {
-			reviewers.add(review.getReviewer());
-		}
-		return reviewers;
+		return this.reviews.stream().map(Review::getReviewer).collect(Collectors.toList());
 	}
 
 	public void setId(int id) {
@@ -44,11 +43,8 @@ public class Article {
 	}
 
 	public void rate(Researcher researcher, Optional<Float> score) {
-		for (Review review : reviews) {
-			if (review.getReviewer() == researcher) {
-				review.setGrade(score);
-			}
-		}
+		this.reviews.stream().filter(review -> review.getReviewer().equals(researcher)).
+		forEach(review -> review.setGrade(score));
 	}
 
 	public void addReview(Researcher researcher, Optional<Float> grade) {
@@ -103,7 +99,7 @@ public class Article {
 	@Override
 	public String toString() {
 		String result = toStringSimple() + "\n";
-		result += "Author:\n" + author.toStringSimple() + "\n";
+		result += "Author:\n" + author.toStringSimple() + " " + author.getUniversity() +  "\n";
 		result += "Reviewers:\n";
 		for (Researcher reviewer : reviewers()) {
 			result += reviewer.toStringSimple() + "\n";

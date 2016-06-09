@@ -7,10 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import peer_review.data.Database;
-import peer_review.models.Conference;
 import peer_review.models.ResearchTopic;
 import peer_review.models.University;
-import peer_review.models.Article;
 
 public class DatabaseTest {
 	

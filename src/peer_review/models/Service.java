@@ -14,8 +14,16 @@ public class Service {
 
 	private Database db;
 
-	public void allocArticlesToMembers(Conference conference, int numReviewers, UserInterface ui) {
-		// TODO: Implement
+	public Researcher allocateToCommittee(Article article, Conference conference) {
+		return conference.allocateToCommittee(article);
+	}
+
+	public Article getLowestIDSubmittedArticle(Conference conference) {
+		return conference.getLowestIDSubmittedArticle();
+	}
+
+	public boolean areArticlesAllocated(Conference conference) {
+		return conference.areArticlesAllocated();
 	}
 
 	public void rateArticle(Article article, Researcher reviewer, float rate) {

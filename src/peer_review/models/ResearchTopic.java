@@ -19,4 +19,9 @@ public class ResearchTopic {
 	public String toString() {
 		return getName();
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		return ((ResearchTopic) o).getName() == this.getName();
+	}
 }

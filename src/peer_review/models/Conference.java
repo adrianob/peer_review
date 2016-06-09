@@ -33,7 +33,8 @@ public class Conference {
 	}
 
 	public Article getLowestIDSubmittedArticle() {
-		return articlesSubmitted.stream().min(Comparator.comparingInt(Article::getID)).get();
+		return articlesSubmitted.stream().filter(article -> !articlesAllocated().contains(article)).
+				min(Comparator.comparingInt(Article::getID)).get();
 	}
 
 	public ArrayList<Researcher> getCandidateReviewers(Article article) {
@@ -52,12 +53,10 @@ public class Conference {
 	}
 
 	public Article allocateArticle(Article lowestIDSubmittedArticle, Researcher firstSortedResearcher) {
-		//@TODO should create review instead
-		//lowestIDSubmittedArticle.allocateReviewer(firstSortedResearcher);
-		firstSortedResearcher.allocateArticle(lowestIDSubmittedArticle);
 		assert(articlesSubmitted.contains(lowestIDSubmittedArticle));
-		//articlesSubmitted.remove(lowestIDSubmittedArticle);
-		//articlesAllocated().add(lowestIDSubmittedArticle);
+		assert(committeeMembers.contains(firstSortedResearcher));
+		lowestIDSubmittedArticle.addReview(firstSortedResearcher, null);
+		firstSortedResearcher.allocateArticle(lowestIDSubmittedArticle);
 		return lowestIDSubmittedArticle;
 	}
 
@@ -69,34 +68,52 @@ public class Conference {
 
 	public ArrayList<Article> articlesAllocated() {
 	    return (ArrayList<Article>) articlesSubmitted.stream().
-	    		filter(a -> a.getReviewers().size() > 0).
+	    		filter(a -> a.numberOfReviewers() > 0).
 	    		collect(Collectors.toList());
 	}
 
-	//@TODO order by average grade
 	public ArrayList<Article> getAcceptedArticles() {
-	    return getFilteredArticles((grade) -> grade >= 0);
+		Comparator<Article> byGrade = (a1, a2) -> Float.compare(
+				a2.getGradeAverage(), a1.getGradeAverage());
+	    return (ArrayList<Article>) getFilteredArticles((grade) -> grade >= 0).stream().
+	    		sorted(byGrade).collect(Collectors.toList());
 	}
 
 	public ArrayList<Article> getRejectedArticles() {
-	    return getFilteredArticles((grade) -> grade < 0);
+		Comparator<Article> byGrade = (a1, a2) -> Float.compare(
+				a1.getGradeAverage(), a2.getGradeAverage());
+	    return (ArrayList<Article>) getFilteredArticles((grade) -> grade < 0).stream().
+	    		sorted(byGrade).collect(Collectors.toList());
 	}
 
 	public int getSubmittedArticlesLenght() {
 		return articlesSubmitted.size();
 	}
+	
+	public boolean areArticlesAllocated() {
+		return articlesSubmitted.size() == articlesAllocated().size();
+	}
+	
+	public Researcher allocateToCommittee(Article article) {
+		ArrayList<Researcher> possibleReviewers = getCandidateReviewers(article);
+		possibleReviewers = sortReviewers(possibleReviewers);
+		if (possibleReviewers.size() >= 1) {
+			allocateArticle(article, possibleReviewers.get(0));
+			return possibleReviewers.get(0);
+		}
+		return null;
+	}
 
 	public boolean hasUnreviewedArticles() {
-		if(articlesSubmitted.size() != articlesAllocated().size()) {
+		if(!areArticlesAllocated()) {
 			return true;
 		}
 		for (Article allocatedArticle : articlesAllocated()) {
-			for (Review grade : allocatedArticle.getGrades()) {
-				if (!grade.getGrade().isPresent()) {
-					return true;
-				}
+			if (allocatedArticle.getGrades().stream().anyMatch(grade -> !grade.getGrade().isPresent())) {
+				return true;
 			}
 		}
+
 		return false;
 	}
 

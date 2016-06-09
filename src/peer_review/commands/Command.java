@@ -1,4 +1,6 @@
-package peer_review.models;
+package peer_review.commands;
+
+import peer_review.ui.UserInterface;
 
 public abstract class Command {
 	public UserInterface ui;

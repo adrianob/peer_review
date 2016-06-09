@@ -9,11 +9,11 @@ public class Researcher {
 	private ArrayList<ResearchTopic> researchTopics;
 	public ArrayList<Article> allocatedArticles;
 
-	public Researcher(int id, String name, University affiliation, ArrayList<ResearchTopic> researchTopic) {
+	public Researcher(int id, String name, University affiliation, ArrayList<ResearchTopic> researchTopics) {
 		this.id = id;
 		this.name = name;
 		this.affiliation = affiliation;
-		this.researchTopics = researchTopic;
+		this.researchTopics = researchTopics;
 		this.allocatedArticles = new ArrayList<Article>();
 	}
 
@@ -23,6 +23,10 @@ public class Researcher {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void setUniversity(University affiliation) {
+		this.affiliation = affiliation;
 	}
 
 	public ArrayList<ResearchTopic> getResearchTopics() {
@@ -50,8 +54,8 @@ public class Researcher {
 	}
 	
 	public boolean isEligibleToReview(Article article) {
-		return !(this == article.getAuthor() || 
-				article.getAuthorUniversity() == this.getUniversity() ||
+		return !(this.equals(article.getAuthor()) || 
+				article.getAuthorUniversity().equals(this.getUniversity()) ||
 				!this.getResearchTopics().contains(article.getResearchTopic()) ||
 				article.isResearcherAllocated(this));
 	}
@@ -75,5 +79,10 @@ public class Researcher {
 		}
 
 		return result;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		return ((Researcher) o).getID() == this.getID();
 	}
 }

@@ -1,13 +1,17 @@
-package peer_review.models;
+package peer_review.commands;
+
+import java.util.stream.Collectors;
+
+import peer_review.models.Conference;
+import peer_review.ui.UserInterface;
 
 public class SelectArticleCommand extends Command {
-	protected SelectArticleCommand(UserInterface ui) {
+	public SelectArticleCommand(UserInterface ui) {
 		super(ui);
 	}
 
 	public void execute() {
-		ui.showConferences();
-		Conference conference = ui.selectConference();
+		Conference conference = ui.readConference(ui.service.getConferences().stream().collect(Collectors.toList()));
 		if (ui.service.hasUnreviewdArticles(conference)) {
 			ui.showMessage("Notas pendentes");
 			return;
