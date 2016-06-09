@@ -45,7 +45,7 @@ public class ConferenceTest {
 		Researcher author = new ResearcherBuilder().build();
 		
 		author.setUniversity(new University("UFRGS"));
-		Researcher revisor = new ResearcherBuilder().build();
+		Researcher revisor = new ResearcherBuilder().id(2).build();
 		revisor.setUniversity(new University("Uniasselvi"));
 		Conference conference = new ConferenceBuilder().initials("foo").committeeMember(revisor).build();
 		
@@ -54,6 +54,9 @@ public class ConferenceTest {
 			 .author(author)
 			  .build();
 		
+		System.out.println("start");
+		System.out.println(author);
+		System.out.println(revisor);
 		assertTrue(revisor.isEligibleToReview(article1));
 		assertFalse(author.isEligibleToReview(article1));
 		ArrayList<Researcher> r = new ArrayList<Researcher>();

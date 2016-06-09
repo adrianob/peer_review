@@ -54,9 +54,6 @@ public class ResearcherTest {
 	
 	@Test
 	public void testIsEligibleToReview() {
-		System.out.println("start");
-		System.out.println(researcher);
-		System.out.println(article);
 		assertFalse(researcher.isEligibleToReview(article));
 	}
 }
