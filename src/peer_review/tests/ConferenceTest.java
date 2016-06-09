@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import peer_review.models.Article;
 import peer_review.models.Conference;
-import peer_review.models.ResearchTopic;
 import peer_review.models.Researcher;
 import peer_review.models.University;
 import peer_review.builders.*;

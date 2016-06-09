@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 import peer_review.data.*;
-import peer_review.ui.UserInterface;
 
 public class Service {
 	
