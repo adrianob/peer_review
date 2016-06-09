@@ -21,7 +21,6 @@ public class ResearcherTest {
 		System.out.print(researcher.toString());
 		article = new ArticleBuilder().id(1).title("title").build();
 		System.out.print(article.toString());
-		researcher.allocateArticle(article);
 	}
 
 	@Test
@@ -49,11 +48,20 @@ public class ResearcherTest {
 
 	@Test
 	public void testGetAlocatedArticles() {
+		researcher.allocateArticle(article);
 		assertTrue(1 == researcher.getAlocatedArticles().get(0).getID());
 	}
 	
 	@Test
 	public void testIsEligibleToReview() {
 		assertFalse(researcher.isEligibleToReview(article));
+	}
+	
+	@Test
+	public void testAllocateArticle() {
+		researcher.allocateArticle(article);
+		researcher.allocateArticle(article);
+		researcher.allocateArticle(article);
+		assertTrue(researcher.allocatedArticles.size()==3);
 	}
 }
