@@ -1,5 +1,6 @@
 package peer_review.models;
 import peer_review.data.*;
+import peer_review.ui.UserInterface;
 public class PeerReview {
 	public static UserInterface ui;
 	public static Database db;

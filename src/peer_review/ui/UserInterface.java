@@ -1,4 +1,4 @@
-package peer_review.models;
+package peer_review.ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,15 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+
+import peer_review.commands.AllocateArticleToMemberCommand;
+import peer_review.commands.Command;
+import peer_review.commands.RateArticleCommand;
+import peer_review.commands.SelectArticleCommand;
+import peer_review.models.Article;
+import peer_review.models.Conference;
+import peer_review.models.Researcher;
+import peer_review.models.Service;
 
 public class UserInterface {
 	public Service service;

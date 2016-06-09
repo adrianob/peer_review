@@ -1,7 +1,10 @@
-package peer_review.models;
+package peer_review.commands;
+
+import peer_review.models.Conference;
+import peer_review.ui.UserInterface;
 
 public class SelectArticleCommand extends Command {
-	protected SelectArticleCommand(UserInterface ui) {
+	public SelectArticleCommand(UserInterface ui) {
 		super(ui);
 	}
 

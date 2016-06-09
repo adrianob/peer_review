@@ -1,9 +1,12 @@
-package peer_review.models;
+package peer_review.commands;
 
-import java.util.ArrayList;
+import peer_review.models.Article;
+import peer_review.models.Conference;
+import peer_review.models.Researcher;
+import peer_review.ui.UserInterface;
 
 public class AllocateArticleToMemberCommand extends Command {
-	protected AllocateArticleToMemberCommand(UserInterface ui) {
+	public AllocateArticleToMemberCommand(UserInterface ui) {
 		super(ui);
 	}
 
