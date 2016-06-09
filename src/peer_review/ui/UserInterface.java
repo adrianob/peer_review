@@ -2,15 +2,10 @@ package peer_review.ui;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import peer_review.commands.AllocateArticleToMemberCommand;
-import peer_review.commands.Command;
-import peer_review.commands.RateArticleCommand;
-import peer_review.commands.SelectArticleCommand;
+import peer_review.commands.*;
 import peer_review.models.Article;
 import peer_review.models.Conference;
 import peer_review.models.Researcher;
@@ -51,50 +46,45 @@ public class UserInterface {
 
 	public Researcher readReviewer(List<Researcher> reviewers) {
 		showMessage("Selecione o id do revisor");
-		for (Researcher reviewer : reviewers) {
-			showMessage(reviewer.toStringSimple());
-		}
+		showResearchers(reviewers);
 		while (true) {
 			int reviewerID = readInteger();
-			boolean isIDvalid = reviewers.stream().anyMatch(a -> a.getID() == reviewerID);
-			if (!isIDvalid) {
+			ArrayList<Researcher> results = (ArrayList<Researcher>) reviewers.stream()
+					.filter(item -> item.getID() == reviewerID).collect(Collectors.toList());
+			if (results.size() == 0) {
 				showMessage("ID inválido, tente de novo");
 			} else {
-				return service.readResearcher(reviewerID);
+				return results.get(0);
 			}
 		}
 	}
 
-	public Article readArticle() {
+	public Article readArticle(List<Article> articles) {
 		showMessage("Selecione o id do artigo");
-		showArticlesList();
+		showArticles(articles);
 		while (true) {
 			int articleID = readInteger();
-			Article article = service.readArticle(articleID);
-			if (article == null) {
+			ArrayList<Article> results = (ArrayList<Article>) articles.stream()
+					.filter(item -> item.getID() == articleID).collect(Collectors.toList());
+			if (results.size() == 0) {
 				showMessage("ID inválido, tente de novo");
 			} else {
-				return article;
+				return results.get(0);
 			}
 		}
-
 	}
 
-	public Conference readConference() {
+	public Conference readConference(List<Conference> conferences) {
 		showMessage("Digite o nome da conferência");
-		ArrayList<Conference> conferences = (ArrayList<Conference>) service.getConferences().stream().filter(a -> !a.areArticlesAllocated()).collect(Collectors.toList());
-		for (Conference conference : conferences) {
-			showMessage(conference.toStringSimple());
-		}
-
+		showConferences(conferences);
 		while (true) {
 			String conferenceInitials = readString();
-			boolean contains = conferences.stream().anyMatch(a -> a.getInitials().equals(conferenceInitials));
-			if (contains) {
-				return service.readConference(conferenceInitials);
-			}
-			else {
+			ArrayList<Conference> results = (ArrayList<Conference>) conferences.stream()
+					.filter(item -> item.getInitials().equals(conferenceInitials)).collect(Collectors.toList());
+			if (results.size() == 0) {
 				showMessage("Conferencia inválida, tente de novo");
+			} else {
+				return results.get(0);
 			}
 		}
 	}
@@ -158,28 +148,28 @@ public class UserInterface {
 		}
 	}
 
-	public void showArticlesList() {
-		for (Article article : service.getArticles()) {
-			System.out.println(article.toStringSimple());
+	public void showResearchers(List<Researcher> researchers) {
+		for (Researcher researcher : researchers) {
+			showMessage(researcher.toStringSimple());
 		}
 	}
 
-	public void showArticleReviewersList(Article article) {
-		for (Researcher reviewer : article.getReviewers()) {
-			System.out.println(reviewer.toStringSimple());
+	public void showArticles(List<Article> articles) {
+		for (Article article : articles) {
+			showMessage(article.toStringSimple());
 		}
 	}
 
-	public void showConferences() {
-		for (Conference conference : service.getConferences()) {
-			System.out.println(conference.toStringSimple());
+	public void showConferences(List<Conference> conferences) {
+		for (Conference conference : conferences) {
+			showMessage(conference.toStringSimple());
 		}
 	}
 
-	public void showArticlesWithGrades(ArrayList<Article> articlesList) {
+	public void showArticlesWithGrades(List<Article> articlesList) {
 		for (Article article : articlesList) {
 			if (article.getGrades().size() > 0)
-				System.out.println(article.getTitle() + " " + article.getGradeAverage());
+				showMessage(article.getTitle() + " " + article.getGradeAverage());
 		}
 	}
 }

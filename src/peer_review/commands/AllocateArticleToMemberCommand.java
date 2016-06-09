@@ -1,5 +1,8 @@
 package peer_review.commands;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 import peer_review.models.Article;
 import peer_review.models.Conference;
 import peer_review.models.Researcher;
@@ -11,7 +14,13 @@ public class AllocateArticleToMemberCommand extends Command {
 	}
 
 	public void execute() {
-		Conference conferenceSelected = ui.readConference();
+		ArrayList<Conference> conferences = (ArrayList<Conference>) ui.service.getConferences().stream()
+				.filter(a -> !a.areArticlesAllocated()).collect(Collectors.toList());
+		if (conferences.size() == 0) {
+			ui.showMessage("Todas as conferências já tiveram os artigos alocados");
+			return;
+		}
+		Conference conferenceSelected = ui.readConference(conferences);
 		int numberOfReviewers = ui.readNumberOfReviewers(MIN_REVIEWERS, MAX_REVIEWERS);
 		ui.showMessage("Iniciando alocação");
 		while (!conferenceSelected.areArticlesAllocated()) {
@@ -19,12 +28,10 @@ public class AllocateArticleToMemberCommand extends Command {
 			for (int i = 0; i < numberOfReviewers; i++) {
 				Researcher allocated = conferenceSelected.allocateToCommittee(lowest);
 				if (allocated != null) {
-					ui.showMessage("Artigo " + lowest.toStringSimple() + " alocado para o(a) pesquisador(a) " + allocated.toStringSimple());
-				}
-				else
-				{
-					ui.showMessage("Não foi encontrado outro(a) membro do comite que possa realizar a revisão desse artigo");
-					break;
+					ui.showMessage("Artigo " + lowest.toStringSimple() + " alocado para o(a) pesquisador(a) "
+							+ allocated.toStringSimple());
+				} else {
+					assert (false);
 				}
 			}
 		}
