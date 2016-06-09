@@ -1,5 +1,6 @@
 package peer_review.commands;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import peer_review.models.Article;
@@ -12,7 +13,9 @@ public class RateArticleCommand extends Command {
 	}
 
 	public void execute() {
-		Article chosenArticle = ui.readArticle(ui.service.getArticles().stream().collect(Collectors.toList()));
+		ArrayList<Article> hasReviewers = (ArrayList<Article>) ui.service.getArticles().stream()
+				.filter(a -> a.numberOfReviewers() > 0).collect(Collectors.toList());
+		Article chosenArticle = ui.readArticle(hasReviewers);
 		attributeGrade(chosenArticle);
 	}
 
