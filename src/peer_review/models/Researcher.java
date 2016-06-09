@@ -54,8 +54,8 @@ public class Researcher {
 	}
 	
 	public boolean isEligibleToReview(Article article) {
-		return !(this == article.getAuthor() || 
-				article.getAuthorUniversity() == this.getUniversity() ||
+		return !(this.equals(article.getAuthor()) || 
+				article.getAuthorUniversity().equals(this.getUniversity()) ||
 				!this.getResearchTopics().contains(article.getResearchTopic()) ||
 				article.isResearcherAllocated(this));
 	}
@@ -79,5 +79,10 @@ public class Researcher {
 		}
 
 		return result;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		return ((Researcher) o).getID() == this.getID();
 	}
 }

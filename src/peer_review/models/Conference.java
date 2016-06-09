@@ -72,13 +72,18 @@ public class Conference {
 	    		collect(Collectors.toList());
 	}
 
-	//@TODO order by average grade
 	public ArrayList<Article> getAcceptedArticles() {
-	    return getFilteredArticles((grade) -> grade >= 0);
+		Comparator<Article> byGrade = (a1, a2) -> Float.compare(
+				a2.getGradeAverage(), a1.getGradeAverage());
+	    return (ArrayList<Article>) getFilteredArticles((grade) -> grade >= 0).stream().
+	    		sorted(byGrade).collect(Collectors.toList());
 	}
 
 	public ArrayList<Article> getRejectedArticles() {
-	    return getFilteredArticles((grade) -> grade < 0);
+		Comparator<Article> byGrade = (a1, a2) -> Float.compare(
+				a1.getGradeAverage(), a2.getGradeAverage());
+	    return (ArrayList<Article>) getFilteredArticles((grade) -> grade < 0).stream().
+	    		sorted(byGrade).collect(Collectors.toList());
 	}
 
 	public int getSubmittedArticlesLenght() {

@@ -23,15 +23,16 @@ public class AllocateArticleToMemberCommand extends Command {
 		Conference conferenceSelected = ui.readConference(conferences);
 		int numberOfReviewers = ui.readNumberOfReviewers(MIN_REVIEWERS, MAX_REVIEWERS);
 		ui.showMessage("Iniciando alocação");
-		while (!conferenceSelected.areArticlesAllocated()) {
-			Article lowest = conferenceSelected.getLowestIDSubmittedArticle();
+		while (!ui.service.areArticlesAllocated(conferenceSelected)) {
+			Article lowest = ui.service.getLowestIDSubmittedArticle(conferenceSelected);
 			for (int i = 0; i < numberOfReviewers; i++) {
-				Researcher allocated = conferenceSelected.allocateToCommittee(lowest);
+				Researcher allocated = ui.service.allocateToCommittee(lowest, conferenceSelected);
 				if (allocated != null) {
 					ui.showMessage("Artigo " + lowest.toStringSimple() + " alocado para o(a) pesquisador(a) "
 							+ allocated.toStringSimple());
 				} else {
-					assert (false);
+					ui.showMessage("Falha na alocação");
+					return;
 				}
 			}
 		}

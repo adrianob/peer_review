@@ -42,7 +42,7 @@ public class Article {
 	}
 
 	public void rate(Researcher researcher, Optional<Float> score) {
-		this.reviews.stream().filter(review -> review.getReviewer() == researcher).
+		this.reviews.stream().filter(review -> review.getReviewer().equals(researcher)).
 		forEach(review -> review.setGrade(score));
 	}
 
@@ -98,7 +98,7 @@ public class Article {
 	@Override
 	public String toString() {
 		String result = toStringSimple() + "\n";
-		result += "Author:\n" + author.toStringSimple() + "\n";
+		result += "Author:\n" + author.toStringSimple() + " " + author.getUniversity() +  "\n";
 		result += "Reviewers:\n";
 		for (Researcher reviewer : reviewers()) {
 			result += reviewer.toStringSimple() + "\n";

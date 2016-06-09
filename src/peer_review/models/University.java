@@ -15,4 +15,9 @@ public class University {
 	public String toString() {
 		return getName();
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		return ((University) o).getName() == this.getName();
+	}
 }
