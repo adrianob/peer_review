@@ -23,6 +23,7 @@ public class Article {
 		this.researchTopic = researchTopic;
 		this.reviews = reviews;
 		conference.addArticlesSubmitted(this);
+		author.allocateArticle(this);
 	}
 
 	public List<Researcher> reviewers() {
