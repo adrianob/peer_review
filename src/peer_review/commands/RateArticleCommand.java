@@ -1,7 +1,11 @@
-package peer_review.models;
+package peer_review.commands;
+
+import peer_review.models.Article;
+import peer_review.models.Researcher;
+import peer_review.ui.UserInterface;
 
 public class RateArticleCommand extends Command {
-	protected RateArticleCommand(UserInterface ui) {
+	public RateArticleCommand(UserInterface ui) {
 		super(ui);
 	}
 
