@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class UserInterface {
 	public Service service;
@@ -72,17 +73,19 @@ public class UserInterface {
 
 	public Conference readConference() {
 		showMessage("Digite o nome da conferência");
-		for (Conference conference : service.getConferences()) {
+		ArrayList<Conference> conferences = (ArrayList<Conference>) service.getConferences().stream().filter(a -> !a.areArticlesAllocated()).collect(Collectors.toList());
+		for (Conference conference : conferences) {
 			showMessage(conference.toStringSimple());
 		}
 
 		while (true) {
 			String conferenceInitials = readString();
-			Conference conference = service.readConference(conferenceInitials);
-			if (conference == null) {
+			boolean contains = conferences.stream().anyMatch(a -> a.getInitials().equals(conferenceInitials));
+			if (contains) {
+				return service.readConference(conferenceInitials);
+			}
+			else {
 				showMessage("Conferencia inválida, tente de novo");
-			} else {
-				return conference;
 			}
 		}
 	}
