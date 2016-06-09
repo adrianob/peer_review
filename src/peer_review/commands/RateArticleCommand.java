@@ -1,5 +1,7 @@
 package peer_review.commands;
 
+import java.util.stream.Collectors;
+
 import peer_review.models.Article;
 import peer_review.models.Researcher;
 import peer_review.ui.UserInterface;
@@ -10,7 +12,7 @@ public class RateArticleCommand extends Command {
 	}
 
 	public void execute() {
-		Article chosenArticle = ui.readArticle();
+		Article chosenArticle = ui.readArticle(ui.service.getArticles().stream().collect(Collectors.toList()));
 		attributeGrade(chosenArticle);
 	}
 
