@@ -1,5 +1,6 @@
-package peer_review.models;
+package peer_review;
 import peer_review.data.*;
+import peer_review.models.Service;
 import peer_review.ui.UserInterface;
 public class PeerReview {
 	public static UserInterface ui;
