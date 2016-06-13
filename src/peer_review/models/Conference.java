@@ -60,10 +60,8 @@ public class Conference {
 		return lowestIDSubmittedArticle;
 	}
 
-	private ArrayList<Article> getFilteredArticles(DoublePredicate predicate) {
-	    return (ArrayList<Article>) articlesAllocated().stream().
-	    		filter(a -> predicate.test(a.getGradeAverage())).
-	    		collect(Collectors.toList());
+	private Stream<Article> getFilteredArticles(DoublePredicate predicate) {
+	    return articlesAllocated().stream().filter(a -> predicate.test(a.getGradeAverage()));
 	}
 
 	public ArrayList<Article> articlesAllocated() {
@@ -75,14 +73,14 @@ public class Conference {
 	public ArrayList<Article> getAcceptedArticles() {
 		Comparator<Article> byGrade = (a1, a2) -> Float.compare(
 				a2.getGradeAverage(), a1.getGradeAverage());
-	    return (ArrayList<Article>) getFilteredArticles((grade) -> grade >= 0).stream().
+	    return (ArrayList<Article>) getFilteredArticles((grade) -> grade >= 0).
 	    		sorted(byGrade).collect(Collectors.toList());
 	}
 
 	public ArrayList<Article> getRejectedArticles() {
 		Comparator<Article> byGrade = (a1, a2) -> Float.compare(
 				a1.getGradeAverage(), a2.getGradeAverage());
-	    return (ArrayList<Article>) getFilteredArticles((grade) -> grade < 0).stream().
+	    return (ArrayList<Article>) getFilteredArticles((grade) -> grade < 0).
 	    		sorted(byGrade).collect(Collectors.toList());
 	}
 
